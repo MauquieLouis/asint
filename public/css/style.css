@@ -1,0 +1,18 @@
+@CHARSET "ISO-8859-1";
+
+@font-face {
+	font-family: asintFont;
+	src: url(../fonts/MonoType.ttf);
+}
+
+.asintFont{
+	font-family: asintFont;
+}
+
+.asintColor{
+	color:#FD78F7;
+}
+
+.asintNavLogo{
+	font-size:36px;
+}

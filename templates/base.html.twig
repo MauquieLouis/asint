@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <meta name="description" content="JmLaZone91 Production">
+	    <meta name="author" content="JmLaZone91">
+        <title>{% block title %}ASINT BG !{% endblock %}</title>
+        {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
+        {% block stylesheets %}
+            {#{{ encore_entry_link_tags('app') }}#}
+			<link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+			<link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
+        {% endblock %}
+
+        {% block javascripts %}
+            {#{{ encore_entry_script_tags('app') }}#}
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+            <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+        {% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light " style="padding-left:15px;padding-right:15px;">
+    		  <a class="navbar-brand" href="{{ path('home') }}">
+    		    <img src="{{ asset('img/logo.png') }}" width="60" height="50" class="d-inline-block align-top" alt="">
+    		    <span class="asintFont asintColor asintNavLogo">ASINT</span>
+    		  </a>
+    		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    		    <span class="navbar-toggler-icon"></span>
+    		  </button>
+    		  <div class="collapse navbar-collapse" id="navbarNav">
+    		    <ul class="navbar-nav">
+    		      <li class="nav-item active">
+    		        <a class="nav-link" href="{{ path('sports') }}">Sports</a>
+    		      </li>
+    		      <li class="nav-item">
+    		        <a class="nav-link" href="{{ path('evenements') }}">Événements</a>
+    		      </li>
+    		      <li class="nav-item">
+    		        <a class="nav-link" href="{{ path('partenaires') }}">Partenaires</a>
+    		      </li>
+    		      <li class="nav-item">
+    		        <a class="nav-link" href="{{ path('contact') }}">Contact</a>
+    		      </li>
+    		    </ul>
+    		  </div>
+    		</nav>
+    	<div class="container">
+            {% block body %}{% endblock %}
+        </div>
+    </body>
+</html>
