@@ -14,12 +14,16 @@
             {#{{ encore_entry_link_tags('app') }}#}
 			<link href="{{ asset('css/style.css') }}" rel="stylesheet" />
 			<link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" />
+			<link href="{{ asset('fontAwesome/css/all.min.css') }}" rel="stylesheet" />
+			
         {% endblock %}
 
         {% block javascripts %}
             {#{{ encore_entry_script_tags('app') }}#}
             <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
             <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('fontAwesome/js/all.min.js') }}"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         {% endblock %}
     </head>
     <body>
@@ -34,16 +38,19 @@
     		  <div class="collapse navbar-collapse" id="navbarNav">
     		    <ul class="navbar-nav">
     		      <li class="nav-item active">
-    		        <a class="nav-link" href="{{ path('sports') }}">Sports</a>
+    		        <a class="nav-link asintColor" href="{{ path('sports') }}">Sports</a>
     		      </li>
     		      <li class="nav-item">
-    		        <a class="nav-link" href="{{ path('evenements') }}">Événements</a>
+    		        <a class="nav-link asintColor" href="{{ path('evenements') }}">Événements</a>
     		      </li>
     		      <li class="nav-item">
-    		        <a class="nav-link" href="{{ path('partenaires') }}">Partenaires</a>
+    		        <a class="nav-link asintColor" href="{{ path('partenaires') }}">Partenaires</a>
     		      </li>
     		      <li class="nav-item">
-    		        <a class="nav-link" href="{{ path('contact') }}">Contact</a>
+    		        <a class="nav-link asintColor" href="{{ path('equipe') }}">L'équipe</a>
+    		      </li>
+    		      <li class="nav-item">
+    		        <a class="nav-link asintColor" href="{{ path('contact') }}">Contact</a>
     		      </li>
     		    </ul>
     		  </div>
@@ -51,5 +58,33 @@
     	<div class="container">
             {% block body %}{% endblock %}
         </div>
+        
+		<footer class="bg-light text-center text-white" style="float:bottom;">
+			<!-- Grid container -->
+          	<div class="container p-4 pb-0">
+            	<!-- Section: Social media -->
+            	<section class="mb-4">
+                      <!-- Facebook -->
+                      <a class="col disableAEffect asintColor pLR10" target="_blank" href="https://www.facebook.com/youyou.asint">
+                      	<i class="fab fa-facebook" style="font-size:36px;"></i>
+                      </a>
+                      <a class="col disableAEffect asintColor pLR10" target="_blank" href="https://www.instagram.com/youyouasint/">
+                      	<i class="fab fa-instagram" style="font-size:36px;"></i>
+                      </a>
+                      <a class="col disableAEffect asintColor pLR10" target="_blank" href="https://www.linkedin.com/company/asint-imtbs-tsp/about/">
+                      	<i class="fab fa-linkedin" style="font-size:36px;"></i>
+                      </a>
+        		</section>
+            	<!-- Section: Social media -->
+              </div>
+              <!-- Grid container -->
+            
+              <!-- Copyright -->
+              <div class="text-center p-3 asintColor" style="background-color: rgba(0, 0, 0, 0.1);">
+                © 2021 Copyright:
+                <a class="disableAEffect" href="https://www.instagram.com/jlmz51/" target="_blank" style="text-decoration:underline;">Jakituning production</a>
+              </div>
+          <!-- Copyright -->
+        </footer>
     </body>
 </html>

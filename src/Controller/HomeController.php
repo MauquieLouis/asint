@@ -48,6 +48,14 @@ class HomeController extends AbstractController
         
         return $this->render('asint/contact.html.twig',[]);
     }
+    
+    /**
+     * @Route("/667equipe", name="equipe")
+     */
+    public function equipe(){
+        
+        return $this->render('asint/equipe.html.twig',[]);
+    }
 }
 
 ?>

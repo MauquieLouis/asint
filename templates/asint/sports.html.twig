@@ -1,4 +1,50 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-	<h1 class="text-center">Sports</h1>
+	<h1 class="text-center" style="margin-bottom:20px;">Sports</h1>  
+<section id="gallery">
+  <div class="container">
+    <div class="row">
+    <div class="col-lg-4 mb-4">
+    <div class="card">
+      <img src="{{ asset('img/foot.jpg') }}" alt="" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">Foot</h5>
+        <p class="card-text">
+        	Le foot au campus c'est trop bien !
+	  	</p>
+       <!-- <a href="" class="btn btn-outline-success btn-sm">Read More</a>
+        <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a> -->
+      </div>
+     </div>
+    </div>
+  <div class="col-lg-4 mb-4">
+  <div class="card">
+      <img src="{{ asset('img/basket.jpg') }}" alt="" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">Basket</h5>
+        <p class="card-text">
+        	Le basket aussi c'est plûtot cool !
+        </p>
+       <!-- <a href="" class="btn btn-outline-success btn-sm">Read More</a>
+        <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a> -->
+      </div>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-4">
+    <div class="card">
+      <img src="{{ asset('img/beach-volley.jpg') }}" alt="" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">Bitch Volley</h5>
+        <p class="card-text">
+        	bitch volley > beach volley 
+        </p>
+       <!-- <a href="#" class="btn btn-outline-success btn-sm">Read More</a>
+        <a href="#" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a> -->
+      </div>
+     </div>
+    </div>
+  </div>
+</div>
+</section>
+
 {% endblock %} 
