@@ -1,50 +1,100 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-	<h1 class="text-center" style="margin-bottom:20px;">Sports</h1>  
-<section id="gallery">
-  <div class="container">
-    <div class="row">
-    <div class="col-lg-4 mb-4">
-    <div class="card">
-      <img src="{{ asset('img/foot.jpg') }}" alt="" class="card-img-top">
-      <div class="card-body">
-        <h5 class="card-title">Foot</h5>
-        <p class="card-text">
-        	Le foot au campus c'est trop bien !
-	  	</p>
-       <!-- <a href="" class="btn btn-outline-success btn-sm">Read More</a>
-        <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a> -->
-      </div>
-     </div>
-    </div>
-  <div class="col-lg-4 mb-4">
-  <div class="card">
-      <img src="{{ asset('img/basket.jpg') }}" alt="" class="card-img-top">
-      <div class="card-body">
-        <h5 class="card-title">Basket</h5>
-        <p class="card-text">
-        	Le basket aussi c'est plûtot cool !
-        </p>
-       <!-- <a href="" class="btn btn-outline-success btn-sm">Read More</a>
-        <a href="" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a> -->
-      </div>
-      </div>
-    </div>
-    <div class="col-lg-4 mb-4">
-    <div class="card">
-      <img src="{{ asset('img/beach-volley.jpg') }}" alt="" class="card-img-top">
-      <div class="card-body">
-        <h5 class="card-title">Bitch Volley</h5>
-        <p class="card-text">
-        	bitch volley > beach volley 
-        </p>
-       <!-- <a href="#" class="btn btn-outline-success btn-sm">Read More</a>
-        <a href="#" class="btn btn-outline-danger btn-sm"><i class="far fa-heart"></i></a> -->
-      </div>
-     </div>
-    </div>
-  </div>
-</div>
-</section>
+	
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+				<!-- snipp1 -->
+			<!-- 	<ins class="adsbygoogle" -->
+			<!-- 	     style="display:block" -->
+			<!-- 	     data-ad-client="ca-pub-9155049400353686" -->
+			<!-- 	     data-ad-slot="4807425052" -->
+			<!-- 	     data-ad-format="auto" -->
+			<!-- 	     data-full-width-responsive="true"></ins> -->
+			<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+			</script>
+			<div class="col-md-4 col-sm-6">
+				<div class="card-container">
+					<div class="card">
+						<div class="front">
+							<div class="cover">
+								<img src="{{ asset ('img/foot.jpg') }}"/>
+							</div>
+							<div class="content">
+								<div class="main">
+									<h3 class="asintColor text-center">Foot</h3>
+									<p class="text-center">
+										Le foot c'est vraiment bien !
+									</p>
+								</div>
+								<div class="footer">
+									<h6 class="asintColor">voir le responsable →</h6>
+								</div>
+							</div>
+						</div> <!-- end front panel -->
+						<div class="back">
+							<div class="header">
+								<h5 class="asintColor text-center" style="font-size:16px;">Responsable Foot</h5>
+							</div>
+							<div class="content">
+								<div class="main">
+									<div class="profilePicture">
+										<img src="{{ asset('img/Louis.jpg') }}"/>
+									</div>
+									<h4 class="text-center asintColor">Contact</h4>
+									<div class="social-links text-center">
+									<div class="row">
+										<div class="offset-2 col-8">
+											<div class="row">
+												<div class="col-4" name="facebook">
+													<a class="col disableAEffect asintColor pLR10" target="_blank" href="https://www.facebook.com/youyou.asint">
+							                      		<i class="fab fa-facebook" style="font-size:32px;"></i>
+							                      	</a>
+												</div>
+												<div class="col-4" name="instagram">
+													<a class="col disableAEffect asintColor pLR10" target="_blank" href="https://www.instagram.com/youyouasint/">
+								                      	<i class="fab fa-instagram" style="font-size:32px;"></i>
+								                    </a>
+												</div>
+												<div class="col-4" name="linkedIn">
+													<a class="col disableAEffect asintColor pLR10" target="_blank" href="https://www.linkedin.com/company/asint-imtbs-tsp/about/">
+		                    							<i class="fab fa-linkedin" style="font-size:32px;"></i>
+		                      						</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								</div>
+							</div>
+						</div> <!-- end back panel -->
+					</div> <!-- end card -->
+				</div> <!-- end card-container -->
+			</div> <!-- end col sm 3 -->
+		</div>
+	</div>
+       	
+	
+	
+	
+	
+	
 
+<script>
+   $().ready(function(){
+        $('[rel="tooltip"]').tooltip();
+
+    });
+
+    function rotateCard(btn){
+        var $card = $(btn).closest('.card-container');
+        console.log($card);
+        if($card.hasClass('hover')){
+            $card.removeClass('hover');
+        } else {
+            $card.addClass('hover');
+        }
+    }
+</script>
 {% endblock %} 
