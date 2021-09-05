@@ -3,95 +3,33 @@
 	<h1 class="text-center">L'équipe</h1>
 	<div class="container">
 	<div class="row">
-
-    <div class="col-md-4">
-        <h4 class="text-center"><strong>WEB</strong></h4>
+	{% for membre in equipe %}
+    <div class="col-xl-4 col-lg-6 col-12">
+        <h4 class="text-center"><strong>{{ membre.pole }}</strong></h4>
         <hr>
     	<!-- <div class="profile-card-6"><img src="http://envato.jayasankarkr.in/code/profile/assets/img/profile-6.jpg" class="img img-responsive"> -->
-    	<div class="profile-card-6"><img src="{{ asset('img/Louis.jpg') }}" class="img img-responsive">
-            <div class="profile-name">LOUIS
-                <br>MAUQUIE
+    	<div class="profile-card-6"><img src="{{ asset('img/membre/' ~ membre.photo) }}" class="img img-responsive">
+            <div class="profile-name">{{ membre.nom }}
+                <br>{{ membre.prenom }}
            	</div>
-        	<div class="profile-position">Ricard / 20</div>
+        	<div class="profile-position">{% if membre.autre %}{{ membre.autre }} / 20 {% endif %}</div>
             <div class="profile-overview">
                 <div class="profile-overview">
                     <div class="row text-center">
-                        <div class="col-4">
-                            <h3>3</h3>
-                            <p>Rank</p>
+                        <div class="col-6">
+                            <a class="col disableAEffect pLR10" target="_blank" href="{{ membre.lienfb }}">
+	                      		<i class="fab fa-facebook" style="font-size:32px;"></i>
+	                      	</a>
                         </div>
-                        <div class="col-4">
-                            <h3>178</h3>
-                            <p>Cuites</p>
-                        </div>
-                        <div class="col-4">
-                            <h3>∞</h3>
-                            <p>Choppes</p>
+                        <div class="col-6">
+                            <a class="col disableAEffect pLR10" target="_blank" href="{{ membre.lienInsta }}">
+	                      		<i class="fab fa-instagram" style="font-size:32px;"></i>
+	                      	</a>
                         </div>
                     </div>
                 </div>
             </div>
-        	</div>
-        	</div>
-    <div class="col-md-4">
-        <h4 class="text-center"><strong>PRESIDENT</strong></h4>
-        <hr>
-    	<!-- <div class="profile-card-6"><img src="http://envato.jayasankarkr.in/code/profile/assets/img/profile-6.jpg" class="img img-responsive"> -->
-    	<div class="profile-card-6"><img src="{{ asset('img/aieMen.jpg') }}" class="img img-responsive">
-            <div class="profile-name">AYMEN
-                <br>KHOUTIR
-           	</div>
-        	<div class="profile-position">Charisme / 20</div>
-            <div class="profile-overview">
-                <div class="profile-overview">
-                    <div class="row text-center">
-                        <div class="col-4">
-                            <h3>2</h3>
-                            <p>Rank</p>
-                        </div>
-                        <div class="col-4">
-                            <h3>256</h3>
-                            <p>Cuites</p>
-                        </div>
-                        <div class="col-4">
-                            <h3>1</h3>
-                            <p>Choppes</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        	</div>
-        	</div>
-        	    <div class="col-md-4">
-        <h4 class="text-center"><strong>VICE-PRESIDENT</strong></h4>
-        <hr>
-    	<!-- <div class="profile-card-6"><img src="http://envato.jayasankarkr.in/code/profile/assets/img/profile-6.jpg" class="img img-responsive"> -->
-    	<div class="profile-card-6"><img src="{{ asset('img/kafesse.jpg') }}" class="img img-responsive">
-            <div class="profile-name">RYAN
-                <br>KAFIH
-           	</div>
-        	<div class="profile-position">BG / 20</div>
-            <div class="profile-overview">
-                <div class="profile-overview">
-                    <div class="row text-center">
-                        <div class="col-4">
-                            <h3>1</h3>
-                            <p>Rank</p>
-                        </div>
-                        <div class="col-4">
-                            <h3>483</h3>
-                            <p>Cuites</p>
-                        </div>
-                        <div class="col-4">
-                            <h3>74</h3>
-                            <p>Choppes</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        	</div>
-    	</div>
-    	</div>
-    </div>
-
+       	</div>
+   	</div>
+   	{% endfor %}
 {% endblock %} 

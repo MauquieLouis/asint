@@ -6,6 +6,7 @@ use App\Entity\Membre;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class AddMembreType extends AbstractType
 {
@@ -20,7 +21,7 @@ class AddMembreType extends AbstractType
             ->add('lienlinkedin')
             ->add('rang')
             ->add('autre')
-            ->add('photo')
+            ->add('photo', FileType::class)
         ;
     }
 

@@ -11,6 +11,9 @@ use App\Entity\Membre;
 use App\Form\AddMembreType;
 use App\Form\AddSportType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
 
 class HomeController extends AbstractController
 {
@@ -26,8 +29,9 @@ class HomeController extends AbstractController
      * @Route("/sports", name="sports")
      */
     public function sports(){
-        
-        return $this->render('asint/sports.html.twig',[]);
+        $equipe = $this->getDoctrine()->getRepository(Membre::class)->findAll();
+        $sports = $this->getDoctrine()->getRepository(Sport::class)->findAll();
+        return $this->render('asint/sports.html.twig',['equipe' => $equipe, 'sports' => $sports]);
     }
     
     /**
@@ -58,14 +62,14 @@ class HomeController extends AbstractController
      * @Route("/667equipe", name="equipe")
      */
     public function equipe(){
-        
-        return $this->render('asint/equipe.html.twig',[]);
+        $equipe = $this->getDoctrine()->getRepository(Membre::class)->findAll();
+        return $this->render('asint/equipe.html.twig',['equipe' => $equipe]);
     }
     
     /**
      * @Route("/addsport", name="addSport")
      */
-    public function addSport(Request $request){
+    public function addSport(Request $request, SluggerInterface $slugger){
         $sport = new Sport();
         
         $form = $this->createForm(AddSportType::class, $sport);
@@ -73,6 +77,24 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $sport = $form->getData();
+            
+            $photo = $form->get('photo')->getData();
+            
+            
+            if($photo){
+                $originalFilename = pathinfo($photo->getClientOriginalName(),PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.pathinfo($photo->getClientOriginalName(),PATHINFO_EXTENSION);
+                
+                try{
+                    $photo->move($this->getParameter('photoSport_directory'), $newFilename);
+                    
+                    
+                }catch(FileException $e){
+                    dd($e);
+                }
+                $sport->setPhoto($newFilename);
+            }
             
             $em = $this->getDoctrine()->getManager();
             $em->persist($sport);
@@ -86,7 +108,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/addmembre", name="addMembre")
      */
-    public function addMembre(Request $request){
+    public function addMembre(Request $request, SluggerInterface $slugger){
         $membre = new Membre();
         
         $form = $this->createForm(AddMembreType::class, $membre);
@@ -95,6 +117,24 @@ class HomeController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $membre = $form->getData();
             
+            $photo = $form->get('photo')->getData();
+            
+            
+            if($photo){
+                $originalFilename = pathinfo($photo->getClientOriginalName(),PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.pathinfo($photo->getClientOriginalName(),PATHINFO_EXTENSION);
+                
+                try{
+                    $photo->move($this->getParameter('photo_directory'), $newFilename);
+                    
+                 
+                }catch(FileException $e){
+                    dd($e);    
+                }
+                $membre->setPhoto($newFilename);
+            }
+ 
             $em = $this->getDoctrine()->getManager();
             $em->persist($membre);
             $em->flush();

@@ -182,8 +182,8 @@ h1 {
 }
 
 .profile-card-6 {
-    max-width: 400px;
-    min-width:400px;
+    max-width: 370px;
+    min-width:370px;
     max-height:auto;
     background-color: #FFF;
     border-radius: 5px;
@@ -198,7 +198,7 @@ h1 {
 .profile-card-6 img {
     transition: all 0.15s linear;
     max-height:auto;
-    max-width:400px;
+    max-width:370px;
 }
 
 .profile-card-6 .profile-name {
@@ -364,6 +364,7 @@ box-shadow: 0px 0px 19px 0px rgba(0,0,0,0.16);
 }
 .card .cover img{
     width: 100%;
+/*     max-width:341px; */
 }
 
 .card .profilePicture{
