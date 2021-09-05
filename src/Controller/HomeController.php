@@ -6,6 +6,11 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Sport;
+use App\Entity\Membre;
+use App\Form\AddMembreType;
+use App\Form\AddSportType;
+use Symfony\Component\HttpFoundation\Request;
 
 class HomeController extends AbstractController
 {
@@ -55,6 +60,49 @@ class HomeController extends AbstractController
     public function equipe(){
         
         return $this->render('asint/equipe.html.twig',[]);
+    }
+    
+    /**
+     * @Route("/addsport", name="addSport")
+     */
+    public function addSport(Request $request){
+        $sport = new Sport();
+        
+        $form = $this->createForm(AddSportType::class, $sport);
+        
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $sport = $form->getData();
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($sport);
+            $em->flush();
+            
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('asint/addSport.html.twig',['form' => $form->createView(),]);
+    }
+    
+    /**
+     * @Route("/addmembre", name="addMembre")
+     */
+    public function addMembre(Request $request){
+        $membre = new Membre();
+        
+        $form = $this->createForm(AddMembreType::class, $membre);
+        
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $membre = $form->getData();
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($membre);
+            $em->flush();
+            
+            return $this->redirectToRoute('home');
+        }
+        
+        return $this->render('asint/addMembre.html.twig',['form' => $form->createView(),]);
     }
 }
 
