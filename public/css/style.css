@@ -183,7 +183,8 @@ h1 {
 
 .profile-card-6 {
     max-width: 370px;
-    min-width:370px;
+/*     min-width:330px; */
+	width:100%;
     max-height:auto;
     background-color: #FFF;
     border-radius: 5px;

@@ -4,6 +4,7 @@
 	<div class="container">
 	<div class="row">
 	{% for membre in equipe %}
+	{% if membre.rang != 0 %}
     <div class="col-xl-4 col-lg-6 col-12">
         <h4 class="text-center"><strong>{{ membre.pole }}</strong></h4>
         <hr>
@@ -31,5 +32,6 @@
             </div>
        	</div>
    	</div>
+   	{% endif %}
    	{% endfor %}
 {% endblock %} 
