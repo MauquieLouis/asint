@@ -69,85 +69,81 @@ class HomeController extends AbstractController
     /**
      * @Route("/addsport", name="addSport")
      */
-    public function addSport(Request $request, SluggerInterface $slugger){
-        $sport = new Sport();
+//     public function addSport(Request $request, SluggerInterface $slugger){
+//         $sport = new Sport();
         
-        $form = $this->createForm(AddSportType::class, $sport);
+//         $form = $this->createForm(AddSportType::class, $sport);
         
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-            $sport = $form->getData();
+//         $form->handleRequest($request);
+//         if($form->isSubmitted() && $form->isValid()){
+//             $sport = $form->getData();
             
-            $photo = $form->get('photo')->getData();
+//             $photo = $form->get('photo')->getData();
             
             
-            if($photo){
-                $originalFilename = pathinfo($photo->getClientOriginalName(),PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.pathinfo($photo->getClientOriginalName(),PATHINFO_EXTENSION);
+//             if($photo){
+//                 $originalFilename = pathinfo($photo->getClientOriginalName(),PATHINFO_FILENAME);
+//                 $safeFilename = $slugger->slug($originalFilename);
+//                 $newFilename = $safeFilename.'-'.uniqid().'.'.pathinfo($photo->getClientOriginalName(),PATHINFO_EXTENSION);
                 
-                try{
-                    $photo->move($this->getParameter('photoSport_directory'), $newFilename);
+//                 try{
+//                     $photo->move($this->getParameter('photoSport_directory'), $newFilename);
                     
                     
-                }catch(FileException $e){
-                    dd($e);
-                }
-                $sport->setPhoto($newFilename);
-            }
+//                 }catch(FileException $e){
+//                     dd($e);
+//                 }
+//                 $sport->setPhoto($newFilename);
+//             }
             
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($sport);
-            $em->flush();
+//             $em = $this->getDoctrine()->getManager();
+//             $em->persist($sport);
+//             $em->flush();
             
-            return $this->redirectToRoute('home');
-        }
-        return $this->render('asint/addSport.html.twig',['form' => $form->createView(),]);
-    }
+//             return $this->redirectToRoute('home');
+//         }
+//         return $this->render('asint/addSport.html.twig',['form' => $form->createView(),]);
+//     }
     
     /**
      * @Route("/addmembre", name="addMembre")
      */
-    public function addMembre(Request $request, SluggerInterface $slugger){
-        $membre = new Membre();
+//     public function addMembre(Request $request, SluggerInterface $slugger){
+//         $membre = new Membre();
         
-        $form = $this->createForm(AddMembreType::class, $membre);
+//         $form = $this->createForm(AddMembreType::class, $membre);
         
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-            $membre = $form->getData();
+//         $form->handleRequest($request);
+//         if($form->isSubmitted() && $form->isValid()){
+//             $membre = $form->getData();
             
-            $photo = $form->get('photo')->getData();
+//             $photo = $form->get('photo')->getData();
             
             
-            if($photo){
-                $originalFilename = pathinfo($photo->getClientOriginalName(),PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.pathinfo($photo->getClientOriginalName(),PATHINFO_EXTENSION);
+//             if($photo){
+//                 $originalFilename = pathinfo($photo->getClientOriginalName(),PATHINFO_FILENAME);
+//                 $safeFilename = $slugger->slug($originalFilename);
+//                 $newFilename = $safeFilename.'-'.uniqid().'.'.pathinfo($photo->getClientOriginalName(),PATHINFO_EXTENSION);
                 
-                try{
-                    $photo->move($this->getParameter('photo_directory'), $newFilename);
+//                 try{
+//                     $photo->move($this->getParameter('photo_directory'), $newFilename);
                     
                  
-                }catch(FileException $e){
-                    dd($e);    
-                }
-                $membre->setPhoto($newFilename);
-            }
+//                 }catch(FileException $e){
+//                     dd($e);    
+//                 }
+//                 $membre->setPhoto($newFilename);
+//             }
  
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($membre);
-            $em->flush();
+//             $em = $this->getDoctrine()->getManager();
+//             $em->persist($membre);
+//             $em->flush();
             
-            return $this->redirectToRoute('home');
-        }
+//             return $this->redirectToRoute('home');
+//         }
         
-        return $this->render('asint/addMembre.html.twig',['form' => $form->createView(),]);
-    }
+//         return $this->render('asint/addMembre.html.twig',['form' => $form->createView(),]);
+//     }
 }
-
-/**
- * @Route ("/sport/modif/, name="modifSport")
- */
 
 ?>

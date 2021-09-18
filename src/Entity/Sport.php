@@ -37,6 +37,11 @@ class Sport
      */
     private $respo;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Membre::class, inversedBy="sports")
+     */
+    private $responsable;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,18 @@ class Sport
     public function setRespo(?int $respo): self
     {
         $this->respo = $respo;
+
+        return $this;
+    }
+
+    public function getResponsable(): ?Membre
+    {
+        return $this->responsable;
+    }
+
+    public function setResponsable(?Membre $responsable): self
+    {
+        $this->responsable = $responsable;
 
         return $this;
     }

@@ -58,10 +58,14 @@
 	    		  	<div style="float:right">
 	    		  		<ul class="navbar-nav">
 	    		  			<li class="nav-item" style="margin-right:5px;">
-	    		  				<i class="fas fa-user asintFont asintColor" style="font-size:25px"></i>
+	    		  				<a href="{{ path('admin91') }}">
+	    		  					<i class="fas fa-user asintFont asintColor" style="font-size:25px"></i>
+    		  					</a>
 	    		  			</li>
 							<li class="nav-item " style="margin-right:15px;">
-		    			    	<h3 class="asintFont asintColor"> {{ app.user.username }}</h3>
+								<a href="{{ path('admin91') }}">
+		    			    		<h3 class="asintFont asintColor"> {{ app.user.username }}</h3>
+		    			    	</a>
 							</li>
 							<li class="nav-item ">
 								<a href="/logout"><i class="fas fa-sign-out-alt asintFont asintColor" style="font-size:25px"></i></a>

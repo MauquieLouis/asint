@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<div class="row">
+		<div class="col-12 col-lg-6" id="formulaire">
+			<div class="row">
+				<h1>Ajouter sport</h1>
+				{{ form_start(form) }}
+					<div class="form-group">
+						<div class="col-12">
+							{{ form_widget(form.nom, {'attr':{'class':'form-control form-control-sm', 'placeholder':'Nom'}}) }}
+						</div>
+						<div class="col-12">
+							{{ form_widget(form.texte, {'attr':{'class':'form-control form-control-sm', 'placeholder':'Texte'}}) }}
+						</div>
+						<div class="col-12">
+							{{ form_widget(form.responsable, {'attr':{'class':'form-control form-control-sm', 'placeholder':'respo'}}) }}
+						</div>
+						<div class="col-12">
+							{{ form_widget(form.photo, {'attr':{'class':'form-control', 'placeholder':'Photo'}}) }}
+						</div>
+						<button type="Submit" class="btn btn-primary">valdier</button>
+					</div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+		<div class="col-12 col-lg-6" id="liste">
+			<div class="row">
+			<h1>Liste sports</h1>
+			{% for sport in sports %}
+				<div class="col-12">
+					<a href="{{ path('sport', {idty:sport.id }) }}" class="disableAEffect">
+						<div class=" row listMembre">
+							<div class="imgZone col-2">
+								<img src="{{ asset('img/sport/' ~ sport.photo) }}" height=44>
+							</div>
+							<div class="txtZone col-10">{{ sport.id }} {{ sport.nom }} {{ sport.respo }}</div>
+							
+						</div>
+					</a>
+				</div>
+			{% endfor %}	
+		</div>
+		</div>
+	</div>
+{% endblock %}
