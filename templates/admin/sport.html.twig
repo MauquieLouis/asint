@@ -16,6 +16,9 @@
 							{{ form_widget(form.responsable, {'attr':{'class':'form-control form-control-sm', 'placeholder':'respo'}}) }}
 						</div>
 						<div class="col-12">
+							{{ form_widget(form.rang, {'attr':{'class':'form-control form-control-sm', 'placeholder':'Rang (pour l\'ordre d\'affichage)'}}) }}
+						</div>
+						<div class="col-12">
 							{{ form_widget(form.photo, {'attr':{'class':'form-control', 'placeholder':'Photo'}}) }}
 						</div>
 						<button type="Submit" class="btn btn-primary">valdier</button>
@@ -27,7 +30,7 @@
 			<div class="row">
 			<h1>Liste sports</h1>
 			{% for sport in sports %}
-				<div class="col-12">
+				<div class="col-11">
 					<a href="{{ path('sport', {idty:sport.id }) }}" class="disableAEffect">
 						<div class=" row listMembre">
 							<div class="imgZone col-2">
@@ -37,6 +40,9 @@
 							
 						</div>
 					</a>
+				</div>
+				<div class="col-1">
+					<a href="{{ path('sportDelete', {idty:sport.id}) }}" onclick="return confirm('Voulez vous vraiment supprimer le sport {{ sport.nom }} ? ')"><i class="fas fa-trash asintColor" style="font-size:22px;margin-top:10px;"></i></a>
 				</div>
 			{% endfor %}	
 		</div>

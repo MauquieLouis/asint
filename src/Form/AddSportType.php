@@ -21,6 +21,7 @@ class AddSportType extends AbstractType
         $builder
             ->add('nom')
             ->add('texte',TextType::class,['required'=>false])
+            ->add('rang')
             ->add('responsable', EntityType::class,[
                 'class' => Membre::class,
                 'placeholder' =>'Choisir le respo',

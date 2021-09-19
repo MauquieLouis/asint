@@ -42,6 +42,11 @@ class Sport
      */
     private $responsable;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $rang;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class Sport
     public function setResponsable(?Membre $responsable): self
     {
         $this->responsable = $responsable;
+
+        return $this;
+    }
+
+    public function getRang(): ?int
+    {
+        return $this->rang;
+    }
+
+    public function setRang(?int $rang): self
+    {
+        $this->rang = $rang;
 
         return $this;
     }
