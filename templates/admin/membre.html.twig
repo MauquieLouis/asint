@@ -42,16 +42,18 @@
 			<div class="row">
 			<h1>Liste membres</h1>
 			{% for membre in membres %}
-				<div class="col-12">
+				<div class="col-11">
 					<a href="{{ path('membre', {idty:membre.id }) }}" class="disableAEffect">
-						<div class=" row listMembre">
+						<div class="row listMembre">
 							<div class="imgZone col-2">
 								<img src="{{ asset('img/membre/' ~ membre.photo) }}" height=44>
 							</div>
-							<div class="txtZone col-10">{{ membre.id }} {{ membre.nom }} {{ membre.prenom }}</div>
-							
+							<div class="txtZone col-9">{{ membre.id }} {{ membre.nom }} {{ membre.prenom }}</div>
 						</div>
 					</a>
+				</div>
+				<div class="col-1">
+					<a href="{{ path('membreDelete', {idty:membre.id}) }}" onclick="return confirm('Voulez vous vraiment supprimer le membre {{ membre.nom }} {{ membre.prenom }} ? ')"><i class="fas fa-trash asintColor" style="font-size:22px;margin-top:10px;"></i></a>
 				</div>
 			{% endfor %}	
 		</div>

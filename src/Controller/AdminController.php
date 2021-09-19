@@ -14,7 +14,13 @@ use App\Repository\MembreRepository;
 use App\Repository\SportRepository;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * @IsGranted("ROLE_ADMIN")
+ * @author Louis
+ *
+ */
 class AdminController extends AbstractController
 {
     
@@ -76,6 +82,17 @@ class AdminController extends AbstractController
     }
     
     /**
+     * @Route("/jeanmichlazone91/membre/{idty}/delete", name="membreDelete")
+     */
+    public function membreDelete(Request $request, string $idty){
+        $em = $this->getDoctrine()->getManager();
+        $membre = $this->mR->findOneBy(['id' => intval($idty)]);
+        $em->remove($membre);
+        $em->flush();
+        return $this->redirectToRoute('membre');
+    }
+    
+    /**
      * @Route("/jeanmichlazone91/sport/{idty}", name="sport")
      */
     public function sport(Request $request, SluggerInterface $slugger, string $idty='new'){
@@ -116,5 +133,15 @@ class AdminController extends AbstractController
         }
         
         return $this->render('admin/sport.html.twig',['form' => $form->createView(),'sports'=> $listSports]);
+    }
+    /**
+     * @Route("/jeanmichlazone91/sport/{idty}/delete", name="sportDelete")
+     */
+    public function sportDelete(Request $request, string $idty){
+        $em = $this->getDoctrine()->getManager();
+        $sport = $this->sR->findOneBy(['id' => intval($idty)]);
+        $em->remove($sport);
+        $em->flush();
+        return $this->redirectToRoute('sport');
     }
 }
