@@ -12,9 +12,12 @@ use App\Form\AddMembreType;
 use App\Form\AddSportType;
 use App\Repository\MembreRepository;
 use App\Repository\SportRepository;
+use App\Repository\ClubRepository;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use App\Entity\Club;
+use App\Form\AddClubType;
 
 /**
  * @IsGranted("ROLE_ADMIN")
@@ -26,10 +29,12 @@ class AdminController extends AbstractController
     
     private $mR;
     private $sR;
+    private $cR;
     
-    public function __construct(MembreRepository $mR, SportRepository $sR){
+    public function __construct(MembreRepository $mR, SportRepository $sR, ClubRepository $cR){
         $this->mR=$mR;
         $this->sR=$sR;
+        $this->cR=$cR;
     }
     /**
      * @Route("/jeanmichlazone91", name="admin91")
@@ -143,5 +148,61 @@ class AdminController extends AbstractController
         $em->remove($sport);
         $em->flush();
         return $this->redirectToRoute('sport');
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////////////////
+    //------------------------------------C L U B-----------------------------------------//
+    ////////////////////////////////////////////////////////////////////////////////////////
+    /**
+     * @Route("/jeanmichlazone91/club/{idty}", name="club")
+     */
+    public function club(Request $request, SluggerInterface $slugger, string $idty='new'){
+        $clubs = $this->cR->findAll();
+        if($idty == 'new'){
+            $club = new Club();
+            $form = $this->createForm(AddClubType::class, $club);
+        }else{
+            $club = $this->cR->findOneBy(['id' => intval($idty)]);
+            $form = $this->createForm(AddClubType::class, $club);
+        }
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $club = $form->getData();
+            
+            $photo = $form->get('photo')->getData();
+            
+            
+            if($photo){
+                $originalFilename = pathinfo($photo->getClientOriginalName(),PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.pathinfo($photo->getClientOriginalName(),PATHINFO_EXTENSION);
+                
+                try{
+                    $photo->move($this->getParameter('photoClub_directory'), $newFilename);
+                    
+                    
+                }catch(FileException $e){
+                    dd($e);
+                }
+                $club->setPhoto($newFilename);
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($club);
+            $em->flush();
+            
+            return $this->redirectToRoute('club');
+        }
+        
+        return $this->render('admin/club.html.twig',['form' => $form->createView(),'clubs'=> $clubs]);
+    }
+    /**
+     * @Route("/jeanmichlazone91/club/{idty}/delete", name="clubDelete")
+     */
+    public function clubDelete(Request $request, string $idty){
+        $em = $this->getDoctrine()->getManager();
+        $club = $this->cR->findOneBy(['id' => intval($idty)]);
+        $em->remove($club);
+        $em->flush();
+        return $this->redirectToRoute('club');
     }
 }

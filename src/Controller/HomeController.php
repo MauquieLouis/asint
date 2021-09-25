@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Sport;
 use App\Entity\Membre;
+use App\Entity\Club;
 use App\Form\AddMembreType;
 use App\Form\AddSportType;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +33,13 @@ class HomeController extends AbstractController
         $equipe = $this->getDoctrine()->getRepository(Membre::class)->findAll();
         $sports = $this->getDoctrine()->getRepository(Sport::class)->findAll();
         return $this->render('asint/sports.html.twig',['equipe' => $equipe, 'sports' => $sports]);
+    }
+    /**
+     * @Route("/clubs", name="clubs")
+     */
+    public function clubs(){
+        $clubs = $this->getDoctrine()->getRepository(Club::class)->findAll();
+        return $this->render('asint/clubs.html.twig',['clubs' => $clubs]);
     }
     
     /**

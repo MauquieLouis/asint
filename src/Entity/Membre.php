@@ -69,9 +69,15 @@ class Membre
      */
     private $sports;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Club::class, mappedBy="pres")
+     */
+    private $clubs;
+
     public function __construct()
     {
         $this->sports = new ArrayCollection();
+        $this->clubs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -215,5 +221,36 @@ class Membre
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Club[]
+     */
+    public function getClubs(): Collection
+    {
+        return $this->clubs;
+    }
+
+    public function addClub(Club $club): self
+    {
+        if (!$this->clubs->contains($club)) {
+            $this->clubs[] = $club;
+            $club->addPre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClub(Club $club): self
+    {
+        if ($this->clubs->removeElement($club)) {
+            $club->removePre($this);
+        }
+
+        return $this;
+    }
+    
+    public function __toString(){
+        return $this->getId();
     }
 }

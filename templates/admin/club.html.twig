@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<div class="row">
+		<div class="col-12 col-lg-6" id="formulaire">
+			<div class="row">
+				<h1>Ajouter club</h1>
+				{{ form_start(form) }}
+					<div class="form-group">
+						<div class="col-12">
+							{{ form_widget(form.nom, {'attr':{'class':'form-control form-control-sm', 'placeholder':'Nom'}}) }}
+						</div>
+						<div class="col-12">
+							{{ form_widget(form.texte, {'attr':{'class':'form-control form-control-sm', 'placeholder':'Texte'}}) }}
+						</div>
+						<div class="col-12">
+						{{ form_widget(form.pres , {'attr':{'class':'form-control form-control-sm', 'placeholder':'pres'}}) }}
+						</div>
+						<div class="col-12">
+							{{ form_widget(form.photo, {'attr':{'class':'form-control', 'placeholder':'Photo'}}) }}
+						</div>
+						<button type="Submit" class="btn btn-primary">valdier</button>
+					</div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+		<div class="col-12 col-lg-6" id="liste">
+			<div class="row">
+			<h1>Liste clubs</h1>
+			{% for club in clubs %}
+				<div class="col-11">
+					<a href="{{ path('club', {idty:club.id }) }}" class="disableAEffect">
+						<div class=" row listMembre">
+							<div class="imgZone col-2">
+								<img src="{{ asset('img/club/' ~ club.photo) }}" height=44>
+							</div>
+							<div class="txtZone col-10">{{ club.id }} {{ club.nom }} {% for pres in club.pres %}{{ pres.id }} - {% endfor %}</div>
+							
+						</div>
+					</a>
+				</div>
+				<div class="col-1">
+					<a href="{{ path('clubDelete', {idty:club.id}) }}" onclick="return confirm('Voulez vous vraiment supprimer le club {{ club.nom }} ? ')"><i class="fas fa-trash asintColor" style="font-size:22px;margin-top:10px;"></i></a>
+				</div>
+			{% endfor %}	
+		</div>
+		</div>
+	</div>
+{% endblock %}

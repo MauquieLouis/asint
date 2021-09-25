@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	
+	<div class="row">
+		<div class="col-md-10 offset-md-1">
+			<div class="row">
+				{% for club in clubs %}
+				<!-- = = = = C A R D = = = = =  -->
+				<div class="col-md-4 col-sm-6">
+					<div class="card-container">
+						<div class="card">
+							<div class="front">
+								<div class="cover">
+									<img src="{{ asset ('img/club/' ~ club.photo ) }}"/>
+								</div>
+								<div class="content">
+									<div class="main">
+										<h3 class="asintColor text-center">{{ club.nom }}</h3>
+										<p class="text-center">
+											{{ club.texte }}
+										</p>
+									</div>
+									<div class="footer">
+										<h6 class="asintColor">voir le responsable →</h6>
+									</div>
+								</div>
+							</div> <!-- end front panel -->
+							{% if club.pres %}
+							{% for pres in club.pres %}
+<!-- 							<div class="back"> -->
+<!-- 								<div class="header"> -->
+<!-- 									<h5 class="asintColor text-center" style="font-size:16px;">Responsable {{ club.nom }}</h5> -->
+<!-- 								</div> -->
+<!-- 								<div class="content"> -->
+<!-- 									<div class="main"> -->
+<!-- 										<div class="profilePicture"> -->
+<!-- 											<img src=""/> -->
+<!-- 										</div> -->
+<!-- 										<h4 class="text-center asintColor" style="padding-top:10px;"></h4> -->
+<!-- 										<div class="social-links text-center"> -->
+<!-- 										<div class="row"> -->
+<!-- 											<div class="offset-1 col-10"> -->
+<!-- 												<div class="row" style="padding-top:10px;"> -->
+<!-- 													<div class="col-6" name="facebook"> -->
+<!-- 														<a class="col disableAEffect asintColor pLR10" target="_blank" href="#"> -->
+<!-- 								                      		<i class="fab fa-facebook" style="font-size:32px;"></i> -->
+<!-- 								                      	</a> -->
+<!-- 													</div> -->
+<!-- 													<div class="col-6" name="instagram"> -->
+<!-- 														<a class="col disableAEffect asintColor pLR10" target="_blank" href="#"> -->
+<!-- 									                      	<i class="fab fa-instagram" style="font-size:32px;"></i> -->
+<!-- 									                    </a> -->
+<!-- 													</div> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> end back panel -->
+							{% endfor %}
+							{% endif %}
+						</div> <!-- end card -->
+					</div> <!-- end card-container -->
+				</div> <!-- end col sm 3 -->
+				<!-- = = = =  E N D   C A R D = = = = =  -->
+				{% endfor %}
+				
+			
+			</div>
+		</div>
+	</div>
+       	
+	
+	
+	
+	
+	
+
+<script>
+   $().ready(function(){
+        $('[rel="tooltip"]').tooltip();
+
+    });
+
+    function rotateCard(btn){
+        var $card = $(btn).closest('.card-container');
+        console.log($card);
+        if($card.hasClass('hover')){
+            $card.removeClass('hover');
+        } else {
+            $card.addClass('hover');
+        }
+    }
+</script>
+{% endblock %} 
