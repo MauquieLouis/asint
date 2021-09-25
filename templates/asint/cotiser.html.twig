@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<h1 class="text-center">Cotisation 2021 - 2022</h1>
+
+<p>Bienvenue sur la plate-forme de cotisation en ligne de l'ASINT. </p>
+<p>Nous vous rappelons qu'il n'est pas possible de profiter de l'offre de la société générale de Évry pour les cotisations inférieures à 3 ans.</p>
+
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message|raw }}
+            </div>
+        {% endfor %}
+
+        {% for message in app.flashes('danger') %}
+            <div class="alert alert-danger">
+                {{ message|raw }}
+            </div>
+        {% endfor %}
+
+{{ form_start(form) }}
+{{ form_end(form) }}
+</br>
+
+
+{% endblock %}
