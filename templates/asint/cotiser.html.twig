@@ -1,0 +1,62 @@
+   
+{% extends 'base.html.twig' %}
+{% block body %}
+	<h1 class="text-center">Cotisation 2021 - 2022</h1>
+<div class="infoText asintColor">
+	<p>Bienvenue sur la plate-forme de cotisation en ligne de l'ASINT. </p>
+	<p>Nous vous rappelons qu'il n'est pas possible de profiter de l'offre de la société générale de Évry pour les cotisations inférieures à 3 ans.</p>
+</div>
+
+       
+
+{{ form_start(form) }}
+{{ form_end(form) }}
+</br>
+
+<script>
+	console.log("lol")
+	//désactivation soge si Duree < 3ans
+	selectDuree = document.getElementById("cotisation_duree")
+	console.log(selectDuree);
+	selectDuree.onchange = function(){
+	 	switch(this.value){
+	 		case '1':
+	 			enableSoge();
+	 		break;
+	 		case '2':
+	 		case '3':
+	 			disableSoge();
+	 			//Si la reponse était 1 
+	 			if(document.getElementById('cotisation_remiseSoge').value == true){
+	 				document.getElementById('cotisation_remiseSoge').options.selectedIndex = 0;
+	 			}
+	 		break;
+	 		default:
+	 			console.log("default")
+	 		break;
+	 	}
+	}
+	
+	function disableSoge(){
+		document.getElementById('cotisation_remiseSoge').disabled = true;
+	}
+	
+	function enableSoge(){
+		document.getElementById('cotisation_remiseSoge').disabled = false;
+	}
+	
+	
+	document.getElementById('cotisation_niveau').onchange = function(){
+		if(this.value == 'bachelor'){
+			if(document.getElementById('cotisation_ecole').value == 'TSP'){
+				document.getElementById('cotisation_ecole').options.selectedIndex = 1;
+			}
+		}
+	}
+	document.getElementById('cotisation_ecole').onchange = function(){
+		if(document.getElementById('cotisation_niveau').value == 'bachelor'){
+				document.getElementById('cotisation_niveau').options.selectedIndex = 0;
+			}
+	}
+</script>
+{% endblock %}

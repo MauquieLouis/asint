@@ -46,6 +46,10 @@ h1 {
 	object-fit:cover;
 }
 
+.infoText{
+	font-weight: bold;
+}
+
 .listMembre{
 	width:100%;
 	height:50px;

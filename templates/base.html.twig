@@ -78,7 +78,21 @@
    		     	{% endif %}
     		</nav>
     	<div class="container">
-            {% block body %}{% endblock %}
+    		<!-- = = = = = = = M E S S A G E S    F L A S H = = = = = = = = = = = = -->
+			{% for message in app.flashes('success') %}
+				<div class="alert alert-success">
+					{{ message|raw }}
+				</div>
+			{% endfor %}
+			{% for message in app.flashes('danger') %}
+				<div class="alert alert-danger">
+					{{ message|raw }}
+				</div>
+			{% endfor %}
+    		<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =-->
+            {% block body %}
+            
+            {% endblock %}
         </div>
         
 		<footer class="bg-light text-center text-white" style="float:bottom;">

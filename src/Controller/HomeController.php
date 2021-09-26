@@ -3,17 +3,20 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+// - - - - - - - E N T I T Y - - - - - - - - //
 use App\Entity\Sport;
 use App\Entity\Membre;
 use App\Entity\Club;
-use App\Form\AddMembreType;
-use App\Form\AddSportType;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use App\Entity\Cotisation;
+
+// - - - - - - - - F O R M - - - - - - - - - //
+use App\Form\CotisationType;
+use Symfony\Component\String\UnicodeString;
 
 
 class HomeController extends AbstractController
@@ -75,83 +78,82 @@ class HomeController extends AbstractController
     }
     
     /**
-     * @Route("/addsport", name="addSport")
+     * @Route("/cotiser", name="cotiser")
      */
-//     public function addSport(Request $request, SluggerInterface $slugger){
-//         $sport = new Sport();
-        
-//         $form = $this->createForm(AddSportType::class, $sport);
-        
-//         $form->handleRequest($request);
-//         if($form->isSubmitted() && $form->isValid()){
-//             $sport = $form->getData();
-            
-//             $photo = $form->get('photo')->getData();
-            
-            
-//             if($photo){
-//                 $originalFilename = pathinfo($photo->getClientOriginalName(),PATHINFO_FILENAME);
-//                 $safeFilename = $slugger->slug($originalFilename);
-//                 $newFilename = $safeFilename.'-'.uniqid().'.'.pathinfo($photo->getClientOriginalName(),PATHINFO_EXTENSION);
-                
-//                 try{
-//                     $photo->move($this->getParameter('photoSport_directory'), $newFilename);
-                    
-                    
-//                 }catch(FileException $e){
-//                     dd($e);
-//                 }
-//                 $sport->setPhoto($newFilename);
-//             }
-            
-//             $em = $this->getDoctrine()->getManager();
-//             $em->persist($sport);
-//             $em->flush();
-            
-//             return $this->redirectToRoute('home');
-//         }
-//         return $this->render('asint/addSport.html.twig',['form' => $form->createView(),]);
-//     }
+    public function cotiser(Request $request){
+        $cotis = new Cotisation();
+        $form = $this->createForm(CotisationType::class, $cotis);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $cotis = $form->getData();
+            if ($form["ecole"]->getData() == 1 && $form["niveau"]->getData() == 4 ) {
+                $this->addFlash('danger', 'Bonsoir non.');
+                //rediriger avec message d'erreur (bachelor + TSP = Impossible)
+            }
+            $lien = $this->makeLink($form["optionSalle"]->getData(), $form["remiseSoge"]->getData(),$form["duree"]->getData());
+            $cotis->setLien($lien);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($cotis);
+            $em->flush();
+            //redirection page d'acceuil avec message confirmation contenant le lien
+            //Eventuellement à changer plus tard (truc plus sécu)
+            $message = new UnicodeString('Vous pouvez maintenant cotiser <a href="'.$lien.'" target="_blank">ICI</a>');
+            $final = new UnicodeString('');
+            $this->addFlash('success', $message->append($final));
+            if($lien == "https://www.instagram.com/jlmz51/"){
+                $this->addFlash('danger', 'Une erreur est survenue, merci de recommencer');
+            }
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('asint/cotiser.html.twig',['form' => $form->createView(),]);
+    }
     
-    /**
-     * @Route("/addmembre", name="addMembre")
-     */
-//     public function addMembre(Request $request, SluggerInterface $slugger){
-//         $membre = new Membre();
-        
-//         $form = $this->createForm(AddMembreType::class, $membre);
-        
-//         $form->handleRequest($request);
-//         if($form->isSubmitted() && $form->isValid()){
-//             $membre = $form->getData();
-            
-//             $photo = $form->get('photo')->getData();
-            
-            
-//             if($photo){
-//                 $originalFilename = pathinfo($photo->getClientOriginalName(),PATHINFO_FILENAME);
-//                 $safeFilename = $slugger->slug($originalFilename);
-//                 $newFilename = $safeFilename.'-'.uniqid().'.'.pathinfo($photo->getClientOriginalName(),PATHINFO_EXTENSION);
-                
-//                 try{
-//                     $photo->move($this->getParameter('photo_directory'), $newFilename);
-                    
-                 
-//                 }catch(FileException $e){
-//                     dd($e);    
-//                 }
-//                 $membre->setPhoto($newFilename);
-//             }
- 
-//             $em = $this->getDoctrine()->getManager();
-//             $em->persist($membre);
-//             $em->flush();
-            
-//             return $this->redirectToRoute('home');
-//         }
-        
-//         return $this->render('asint/addMembre.html.twig',['form' => $form->createView(),]);
-//     }
+    
+    private function makeLink($salle,$soge,$duree){
+        switch($duree){
+            case 1: // => 3 ans | SOGE POSSIBLE
+                if($soge){
+                    if($salle){
+                        //LIEN SOGE+SALLE+3ANS
+                        $link = "https://billetterie.pumpkin-app.com/cotisation-asint-societe-generale-salle";
+                    }else{
+                        //LIEN SOGE+3ANS
+                        $link="https://billetterie.pumpkin-app.com/cotisation-asint-societe-generale";
+                    }
+                }else{
+                    if($salle){
+                        //LIEN SALLE+3ANS 
+                        $link="https://billetterie.pumpkin-app.com/cotisation-asint-salle";
+                    }else{
+                        //LIEN 3ANS
+                        $link="https://billetterie.pumpkin-app.com/cotisationasint";
+                    }
+                }
+            break;
+            case 2: // => 1 ans | PAS DE SOGE   
+                if($salle){
+                    //LIEN SALLE+1ANS
+                    $link="https://billetterie.pumpkin-app.com/cotisation-asint-1-an-salle";
+                }else{
+                    //LIEN 1ANS
+                    $link="https://billetterie.pumpkin-app.com/cotisation-asint-1-an";
+                }
+            break;
+            case 3: // => 6 mois | PAS DE SOGE
+                if($salle){
+                    //LIENS SALLE+6MOIS
+                    $link="https://billetterie.pumpkin-app.com/cotisation-asint-6-mois-salle";
+                }else{
+                    //LIENS 6MOIS
+                    $link="https://billetterie.pumpkin-app.com/cotisation-asint-6-mois";
+                }
+            break;
+            default:
+                $link="https://www.instagram.com/jlmz51/";
+            break;
+        }
+        return $link;
+    }
 }
 
 ?>

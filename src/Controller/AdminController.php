@@ -2,22 +2,28 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\Sport;
-use App\Entity\Membre;
-use App\Form\AddMembreType;
-use App\Form\AddSportType;
-use App\Repository\MembreRepository;
-use App\Repository\SportRepository;
-use App\Repository\ClubRepository;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+// - - - - - - - - - - - E N T I T Y - - - - - - - - - - //
+use App\Entity\Sport;
+use App\Entity\Membre;
 use App\Entity\Club;
+
+// - - - - - - - - - - - - F O R M - - - - - - - - - - - //
+use App\Form\AddMembreType;
+use App\Form\AddSportType;
 use App\Form\AddClubType;
+
+// - - - - - - - - - R E P O S I T O R Y - - - - - - - - //
+use App\Repository\MembreRepository;
+use App\Repository\SportRepository;
+use App\Repository\ClubRepository;
 
 /**
  * @IsGranted("ROLE_ADMIN")
