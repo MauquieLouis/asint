@@ -24,6 +24,8 @@ use App\Form\AddClubType;
 use App\Repository\MembreRepository;
 use App\Repository\SportRepository;
 use App\Repository\ClubRepository;
+use App\Repository\CotisationRepository;
+use App\Entity\Cotisation;
 
 /**
  * @IsGranted("ROLE_ADMIN")
@@ -36,11 +38,13 @@ class AdminController extends AbstractController
     private $mR;
     private $sR;
     private $cR;
+    private $coR;
     
-    public function __construct(MembreRepository $mR, SportRepository $sR, ClubRepository $cR){
+    public function __construct(MembreRepository $mR, SportRepository $sR, ClubRepository $cR, CotisationRepository $coR){
         $this->mR=$mR;
         $this->sR=$sR;
         $this->cR=$cR;
+        $this->coR=$coR;
     }
     /**
      * @Route("/jeanmichlazone91", name="admin91")
@@ -211,4 +215,26 @@ class AdminController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('club');
     }
+    
+    /**
+     * @Route ("/jeanmichlazone91/liste/cotisation", name="listeCotis")
+     */
+    public function listeCotis(Request $request){
+        $listeCotis = $this->coR->findBy(['valide' => false]);
+        return $this->render('admin/listeCotis.html.twig',['listeCotis' => $listeCotis]);
+    }
+    
+    /**
+     * @Route("jeanmichlazone91/valid/cotis/{id}", name="validCotis")
+     */
+    public function validCotis(Cotisation $cotis){
+        $cotis->setValide(true);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($cotis);
+        $em->flush();
+        $this->addFlash('success', 'Cotisation de '.$cotis->getNom().' '.$cotis->getPrenom().' validé.');
+        // AJOUTER ENREGISTREMENT BDD GALETTE.
+        return $this->redirectToRoute('listeCotis');
+    }
+
 }

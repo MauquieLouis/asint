@@ -77,6 +77,11 @@ class Cotisation
      */
     private $lien;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $valide;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -222,6 +227,18 @@ class Cotisation
     public function setLien(?string $lien): self
     {
         $this->lien = $lien;
+
+        return $this;
+    }
+
+    public function getValide(): ?bool
+    {
+        return $this->valide;
+    }
+
+    public function setValide(?bool $valide): self
+    {
+        $this->valide = $valide;
 
         return $this;
     }

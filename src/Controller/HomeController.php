@@ -92,6 +92,7 @@ class HomeController extends AbstractController
             }
             $lien = $this->makeLink($form["optionSalle"]->getData(), $form["remiseSoge"]->getData(),$form["duree"]->getData());
             $cotis->setLien($lien);
+            $cotis->setValide(false);
             $em = $this->getDoctrine()->getManager();
             $em->persist($cotis);
             $em->flush();

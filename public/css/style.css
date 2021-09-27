@@ -62,6 +62,21 @@ h1 {
 	background:rgba(253,120,247,0.3);
 	cursor:pointer;
 }
+.listeCotisLine{
+	border:3px solid #FD78F7;
+	margin-bottom:10px;
+	height:50px;
+	border-radius:4px;
+}
+.listeCotisLineTxt{
+    font-weight:bold;
+    color:#565656;
+}
+.listeCotisLineTxtAlign{
+   	position: relative;
+    top: 70%;
+    transform: translateY(-50%);
+}
 
 /*---- W E I  / S E I ----*/
 .sei{

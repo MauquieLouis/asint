@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Cotis{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-12">
+			<h1 class="text-center">Liste Cotisation en ligne non validé</h1>
+			{% for cotis in listeCotis %}
+				<div class="listeCotisLine">
+					<div class="row">
+						<div class="col-10 col-md-8 listeCotisLineTxt ">
+							<div class="listeCotisLineTxtAlign">
+								{{ cotis.nom }}
+								{{ cotis.prenom }}
+								{{ cotis.naissance|date("m/d/Y", "Europe/Paris") }}
+								{{ cotis.ecole }}
+								{{ cotis.niveau }}
+								{{ cotis.mailEcole }}
+								{% if cotis.duree == '1' %}
+									3 ans
+								{% elseif cotis.duree == '2' %}
+									1 ans
+								{% else %}
+									6 mois
+								{% endif %}
+								{% if cotis.remiseSoge %}
+									REMISE SOGE
+								{% endif %}
+							</div>
+						</div>
+						<div class="col-2 col-md-4">
+							<a href="{{ path('validCotis', {id : cotis.id}) }}"
+							class="btn" style="background:#FD78F7;color:white;border:3px solid #EC67E6;margin-top:1px;"
+							onclick="return confirm('Voulez vous vraiment valider la cotisation de {{ cotis.nom }} {{ cotis.prenom }} ? ')">
+							Valider la Cotisation
+							</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+{% endblock %}
