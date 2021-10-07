@@ -236,5 +236,4 @@ class AdminController extends AbstractController
         // AJOUTER ENREGISTREMENT BDD GALETTE.
         return $this->redirectToRoute('listeCotis');
     }
-
 }
