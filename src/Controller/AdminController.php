@@ -47,7 +47,7 @@ class AdminController extends AbstractController
         $this->coR=$coR;
     }
     /**
-     * @Route("/jeanmichlazone91", name="admin91")
+     * @Route("/jeanmichlazone91/index", name="admin91")
      */
     public function index(Request $request)
     {
