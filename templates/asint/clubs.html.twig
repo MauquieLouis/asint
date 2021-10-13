@@ -27,7 +27,7 @@
 							</div> <!-- end front panel -->
 							{% if club.pres %}
 							{% for pres in club.pres %}
-							<div class="back">
+							<div class="back" id="{{ ('back') ~ loop.index }}">
 								<div class="header">
 									<h5 class="asintColor text-center" style="font-size:16px;">Responsable {{ club.nom }}</h5>
 								</div>
@@ -96,5 +96,12 @@
             $card.addClass('hover');
         }
     }
+    function HideAndShow(){
+    	console.log('HideAndShow')
+    	div = document.getElementById('back2')
+    	div.hidden = div.hidden ? false : true; 
+    	console.log(div)
+    }
+    setInterval(HideAndShow,2758);
 </script>
 {% endblock %} 
