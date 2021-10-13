@@ -27,38 +27,42 @@
 							</div> <!-- end front panel -->
 							{% if club.pres %}
 							{% for pres in club.pres %}
-<!-- 							<div class="back"> -->
-<!-- 								<div class="header"> -->
-<!-- 									<h5 class="asintColor text-center" style="font-size:16px;">Responsable {{ club.nom }}</h5> -->
-<!-- 								</div> -->
-<!-- 								<div class="content"> -->
+							<div class="back">
+								<div class="header">
+									<h5 class="asintColor text-center" style="font-size:16px;">Responsable {{ club.nom }}</h5>
+								</div>
+								<div class="content">
+									<div class="main">
+										<div class="profilePicture">
+											<img src="{{ asset('img/membre/' ~ pres.photo) }}"/>
+										</div>
+										<h4 class="text-center asintColor" style="padding-top:10px;">{{ pres.prenom }} {{ pres.nom }}</h4>
+										<div class="social-links text-center">
+										<div class="row">
+											<div class="offset-1 col-10">
+												<div class="row" style="padding-top:10px;">
+													<div class="col-6" name="facebook">
+														<a class="col disableAEffect asintColor pLR10" target="_blank" href="{{ pres.lienfb }}">
+								                      		<i class="fab fa-facebook" style="font-size:32px;"></i>
+								                      	</a>
+													</div>
+													<div class="col-6" name="instagram">
+														<a class="col disableAEffect asintColor pLR10" target="_blank" href="{{ pres.lienInsta }}">
+									                      	<i class="fab fa-instagram" style="font-size:32px;"></i>
+									                    </a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									</div>
+								</div>
+							{% endfor %}
+							</div> <!-- end back panel  -->
 <!-- 									<div class="main"> -->
 <!-- 										<div class="profilePicture"> -->
 <!-- 											<img src=""/> -->
 <!-- 										</div> -->
-<!-- 										<h4 class="text-center asintColor" style="padding-top:10px;"></h4> -->
-<!-- 										<div class="social-links text-center"> -->
-<!-- 										<div class="row"> -->
-<!-- 											<div class="offset-1 col-10"> -->
-<!-- 												<div class="row" style="padding-top:10px;"> -->
-<!-- 													<div class="col-6" name="facebook"> -->
-<!-- 														<a class="col disableAEffect asintColor pLR10" target="_blank" href="#"> -->
-<!-- 								                      		<i class="fab fa-facebook" style="font-size:32px;"></i> -->
-<!-- 								                      	</a> -->
-<!-- 													</div> -->
-<!-- 													<div class="col-6" name="instagram"> -->
-<!-- 														<a class="col disableAEffect asintColor pLR10" target="_blank" href="#"> -->
-<!-- 									                      	<i class="fab fa-instagram" style="font-size:32px;"></i> -->
-<!-- 									                    </a> -->
-<!-- 													</div> -->
-<!-- 												</div> -->
-<!-- 											</div> -->
-<!-- 										</div> -->
-<!-- 									</div> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 							</div> end back panel -->
-							{% endfor %}
 							{% endif %}
 						</div> <!-- end card -->
 					</div> <!-- end card-container -->
