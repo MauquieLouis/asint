@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<div class="row", style="margin-bottom:40px;">
+		<div class="col-12 col-lg-6" id="formulaire">
+			<div class="row">
+				<h1>Ajouter un Partenaire</h1>
+				{{ form_start(form) }}
+					<div class="form-group">
+						<div class="col-12">
+							{{ form_widget(form.nom, {'attr':{'class':'form-control form-control-sm', 'placeholder':'Nom'}}) }}
+						</div>
+						<div class="col-12">
+							{{ form_widget(form.texte, {'attr':{'class':'form-control form-control-sm', 'placeholder':'texte'}}) }}
+						</div>
+						<div class="col-12">
+							{{ form_widget(form.site, {'attr':{'class':'form-control form-control-sm', 'placeholder':'url site'}}) }}
+						</div>
+						<div class="col-12">
+							{{ form_widget(form.insta, {'attr':{'class':'form-control form-control-sm', 'placeholder':'url instagram'}}) }}
+						</div>
+						<div class="col-12">
+							{{ form_widget(form.fb, {'attr':{'class':'form-control form-control-sm', 'placeholder':'url facebook'}}) }}
+						</div>
+						<div class="col-12">
+							{{ form_widget(form.photo, {'attr':{'class':'form-control form-control-sm', 'placeholder':'photo'}}) }}
+						</div>
+						<button type="Submit" class="btn btn-primary">valdier</button> 	
+					</div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+		<div class="col-12 col-lg-6" id="liste">
+			<div class="row">
+				<h1>Liste partenaires</h1>
+				{% for partenaire in partenaires %}
+					<div class="col-11">
+						<a href="{{ path('partenaire', {idty:partenaire.id }) }}" class="disableAEffect">
+							<div class=" row listMembre">
+								<div class="imgZone col-2">
+									<img src="{{ asset('img/partenaire/' ~ partenaire.photo) }}" height=44>
+								</div>
+								<div class="txtZone col-10">{{ partenaire.id }} {{ partenaire.nom }}</div>
+								
+							</div>
+						</a>
+					</div>
+					<div class="col-1">
+						<a href="{{ path('partenaireDelete', {idty:partenaire.id}) }}" onclick="return confirm('Voulez vous vraiment supprimer le partenaire {{ partenaire.nom }} ? ')"><i class="fas fa-trash asintColor" style="font-size:22px;margin-top:10px;"></i></a>
+					</div>
+				{% endfor %}	
+			</div>
+		</div>
+	</div>
+{% endblock %}

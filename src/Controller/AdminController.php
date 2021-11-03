@@ -26,6 +26,9 @@ use App\Repository\SportRepository;
 use App\Repository\ClubRepository;
 use App\Repository\CotisationRepository;
 use App\Entity\Cotisation;
+use App\Repository\PartenaireRepository;
+use App\Entity\Partenaire;
+use App\Form\PartenaireType;
 
 /**
  * @IsGranted("ROLE_ADMIN")
@@ -39,12 +42,14 @@ class AdminController extends AbstractController
     private $sR;
     private $cR;
     private $coR;
+    private $pR;
     
-    public function __construct(MembreRepository $mR, SportRepository $sR, ClubRepository $cR, CotisationRepository $coR){
+    public function __construct(MembreRepository $mR, SportRepository $sR, ClubRepository $cR, CotisationRepository $coR, PartenaireRepository $pR){
         $this->mR=$mR;
         $this->sR=$sR;
         $this->cR=$cR;
         $this->coR=$coR;
+        $this->pR=$pR;
     }
     /**
      * @Route("/jeanmichlazone91/index", name="admin91")
@@ -205,6 +210,52 @@ class AdminController extends AbstractController
         
         return $this->render('admin/club.html.twig',['form' => $form->createView(),'clubs'=> $clubs]);
     }
+    
+    
+    
+    /**
+     * @Route("jeanmichlazone91/partenaires/{idty}", name="partenaire")
+     */
+    public function partenaires(Request $request, SluggerInterface $slugger, string $idty='new'){
+        $partenaires = $this->pR->findAll();
+        if($idty == 'new'){
+            $partenaire = new Partenaire();
+            $form = $this->createForm(PartenaireType::class, $partenaire);
+        }else{
+            $partenaire = $this->pR->findOneBy(['id' => intval($idty)]);
+            $form = $this->createForm(PartenaireType::class, $partenaire);
+        }
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $partenaire = $form->getData();
+            
+            $photo = $form->get('photo')->getData();
+            
+            
+            if($photo){
+                $originalFilename = pathinfo($photo->getClientOriginalName(),PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.pathinfo($photo->getClientOriginalName(),PATHINFO_EXTENSION);
+                
+                try{
+                    $photo->move($this->getParameter('photoPartenaire_directory'), $newFilename);
+                    
+                    
+                }catch(FileException $e){
+                    dd($e);
+                }
+                $partenaire->setPhoto($newFilename);
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($partenaire);
+            $em->flush();
+            
+            return $this->redirectToRoute('partenaire');
+        }
+        
+        return $this->render('admin/partenaire.html.twig',['form' => $form->createView(),'partenaires'=> $partenaires]);
+    }
+    
     /**
      * @Route("/jeanmichlazone91/club/{idty}/delete", name="clubDelete")
      */
@@ -215,6 +266,67 @@ class AdminController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('club');
     }
+    
+    /**
+     * @Route("/jeanmichlazone91/partenaire/{idty}/delete", name="partenaireDelete")
+     */
+    public function partenaireDelete(Request $request, string $idty){
+        $em = $this->getDoctrine()->getManager();
+        $partenaire = $this->pR->findOneBy(['id' => intval($idty)]);
+        $em->remove($partenaire);
+        $em->flush();
+        return $this->redirectToRoute('partenaire');
+    }
+    
+    //================================================================================//
+    //===========================E V E N E M E N T ===================================//
+    //================================================================================//
+    /**
+     * @Route("jeanmichlazone91/partenaires/{idty}", name="partenaire")
+     */
+    public function evenements(Request $request, SluggerInterface $slugger, string $idty='new'){
+        $partenaires = $this->pR->findAll();
+        if($idty == 'new'){
+            $partenaire = new Partenaire();
+            $form = $this->createForm(PartenaireType::class, $partenaire);
+        }else{
+            $partenaire = $this->pR->findOneBy(['id' => intval($idty)]);
+            $form = $this->createForm(PartenaireType::class, $partenaire);
+        }
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $partenaire = $form->getData();
+            
+            $photo = $form->get('photo')->getData();
+            
+            
+            if($photo){
+                $originalFilename = pathinfo($photo->getClientOriginalName(),PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.pathinfo($photo->getClientOriginalName(),PATHINFO_EXTENSION);
+                
+                try{
+                    $photo->move($this->getParameter('photoPartenaire_directory'), $newFilename);
+                    
+                    
+                }catch(FileException $e){
+                    dd($e);
+                }
+                $partenaire->setPhoto($newFilename);
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($partenaire);
+            $em->flush();
+            
+            return $this->redirectToRoute('partenaire');
+        }
+        
+        return $this->render('admin/partenaire.html.twig',['form' => $form->createView(),'partenaires'=> $partenaires]);
+    }
+    //================================================================================//
+    //======================= F I N   E V E N E M E N T ==============================//
+    //================================================================================//
+    
     
     /**
      * @Route ("/jeanmichlazone91/liste/cotisation", name="listeCotis")
@@ -236,4 +348,5 @@ class AdminController extends AbstractController
         // AJOUTER ENREGISTREMENT BDD GALETTE.
         return $this->redirectToRoute('listeCotis');
     }
+    
 }

@@ -17,6 +17,7 @@ use App\Entity\Cotisation;
 // - - - - - - - - F O R M - - - - - - - - - //
 use App\Form\CotisationType;
 use Symfony\Component\String\UnicodeString;
+use App\Entity\Partenaire;
 
 
 class HomeController extends AbstractController
@@ -57,8 +58,8 @@ class HomeController extends AbstractController
      * @Route("/partenaires", name="partenaires")
      */
     public function partenaires(){
-        
-        return $this->render('asint/partenaires.html.twig',[]);
+        $partenaires = $this->getDoctrine()->getRepository(Partenaire::class)->findAll();
+        return $this->render('asint/partenaires.html.twig',['partenaires' => $partenaires]);
     }
     
     /**

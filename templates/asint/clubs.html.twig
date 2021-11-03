@@ -21,7 +21,7 @@
 										</p>
 									</div>
 									<div class="footer">
-										<h6 class="asintColor">voir le responsable →</h6>
+										<h6 class="asintColor">{% if club.pres|length > 1 %}voir les présidents → {% else %}voir le président →{% endif %}</h6>
 									</div>
 								</div>
 							</div> <!-- end front panel -->

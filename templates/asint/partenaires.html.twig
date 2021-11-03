@@ -1,34 +1,36 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 	<h1 class="text-center">Partenaires</h1>
-<!-- <div class="row" style="margin-bottom:20px;">
-	<div class="col-md-4" style="">
-    	<h4 class="text-center"><strong>AUVERNOU</strong></h4>
-    	<hr>
-        <div class="profile-card-4 text-center"><img src="{{ asset('img/auvernou-logo.jpg') }}" class="img img-responsive">
-            <div class="profile-content">
-                <div class="profile-name">Auvernou
-                </div>
-                <div class="profile-description">Saucisson de qualité, avec un bon petit jaune à boire !</div>
-                <div class="row">
-                    <div class="col-4">
-                    	<div class="profile-overview">
-                            <p><a href="https://www.auvernou.com/" class="disableAEffect" target="_blank"><i class="fas fa-globe" style="font-size:36px;"></i></a></p>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="profile-overview">
-                            <p><a href="https://www.instagram.com/auvernou/?hl=fr" class="disableAEffect" target="_blank"><i class="fab fa-instagram" style="font-size:36px;"></i></a></p>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="profile-overview">
-                            <p><a href="https://www.facebook.com/Auvernou/" class="disableAEffect" target="_blank"><i class="fab fa-facebook" style="font-size:36px;"></i></a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-	</div>
-</div> -->
+	{% for partenaire in partenaires %}
+		<div class="row" style="margin-bottom:20px;">
+		<div class="col-md-4" style="">
+	    	<h4 class="text-center"><strong>{{ partenaire.nom }}</strong></h4>
+	    	<hr>
+	        <div class="profile-card-4 text-center"><img src="{{ asset('img/partenaire/' ~ partenaire.photo ) }}" class="img img-responsive">
+	            <div class="profile-content">
+	                <div class="profile-name">{{ partenaire.nom }}
+	                </div>
+	               <div class="profile-description">{{ partenaire.texte }}</div>
+	                <div class="row">
+	                    <div class="col-4">
+	                    	<div class="profile-overview">
+	                            <p><a href="{{ partenaire.site }}" class="disableAEffect" target="_blank"><i class="fas fa-globe" style="font-size:36px;"></i></a></p>
+	                        </div>
+	                    </div>
+	                    <div class="col-4">
+	                        <div class="profile-overview">
+	                            <p><a href=" partenaire.insta }}" class="disableAEffect" target="_blank"><i class="fab fa-instagram" style="font-size:36px;"></i></a></p>
+	                        </div>
+	                    </div>
+	                    <div class="col-4">
+	                        <div class="profile-overview">
+	                            <p><a href="{{ partenaire.fb }}" class="disableAEffect" target="_blank"><i class="fab fa-facebook" style="font-size:36px;"></i></a></p>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+		</div>
+	{% endfor %}
+</div>
 {% endblock %} 
