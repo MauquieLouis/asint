@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Membre;
+use App\Entity\Year;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,7 +25,15 @@ class AddMembreType extends AbstractType
             ->add('lienInsta',TextType::class,['required'=>false])
             ->add('lienlinkedin',TextType::class,['required'=>false])
             ->add('rang')
-            ->add('autre',TextType::class,['required'=>false]);
+            ->add('autre',TextType::class,['required'=>false])
+            ->add('year',EntityType::class,[
+                'class' => Year::class,
+                'placeholder' =>'Choisir l\'année',
+                'required' => false,
+                //                 'choice_value'=> function(?Membre $membre){return $membre ? $membre->getId() : '';},
+                'choice_label' =>function($year){
+                return ($year->getNom().' '.$year->getYear());}
+            ]);
             if($options['data']){
                 $builder->add('photo', FileType::class, array('required'=>false, 'mapped' => false));
             }else{

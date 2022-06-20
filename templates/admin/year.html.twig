@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<div class="row">
+		<div class="col-12 col-lg-6" id="formulaire">
+			<div class="row">
+				<h1>Ajouter une année</h1>
+				<h2>Si vous êtes ici c'est que vous avez gagné, BRAVO !</h2>
+				{{ form_start(form) }}
+					<div class="form-group">
+						<div style="margin-top:20px;"></div>
+						<div class="col-12">
+							{{ form_widget(form.year, {'attr':{'class':'form-control form-control-sm', 'placeholder':'Année'}}) }}
+						</div>
+						<div style="margin-top:20px;"></div>
+						<div class="col-12">
+							{{ form_widget(form.nom, {'attr':{'class':' form-control form-control-sm', 'placeholder':'Nom de la liste'}}) }}
+						</div>
+						<div style="margin-top:20px;"></div>
+						<div class="col-12">
+							{{ form_widget(form.insta, {'attr':{'class':' form-control form-control-sm', 'placeholder':'lien insta liste'}}) }}
+						</div>
+						<div style="margin-top:20px;"></div>
+						<div class="col-12">
+							{{ form_widget(form.fb, {'attr':{'class':' form-control form-control-sm', 'placeholder':'lient facebook liste'}}) }}
+						</div>
+						<div style="margin-top:20px;"></div>
+						<div class="col-12">
+							{{ form_widget(form.site, {'attr':{'class':' form-control form-control-sm', 'placeholder':'lien site de la liste'}}) }}
+						</div>
+						<div style="margin-top:20px;"></div>
+						<div class="col-12">
+							<p>Cocher la case pour rendre l'année active (afficher l'organigramme des gens présent cette année là)</p>
+							{{ form_widget(form.active, {'attr':{'class':' form-check-input', 'label':"aaaaa"}}) }}
+						</div>
+						<div style="margin-top:20px;"></div>
+						<button type="Submit" class="btn btn-primary">valdier</button>
+					</div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+		<div class="col-12 col-lg-6" id="liste">
+			<div class="row">
+			<h1>Liste années déjà existantes</h1>
+			{% for annee in annees %}
+				<div class="col-11">
+					<a href="{{ path('year', {idty:annee.id})}}" class="disableAEffect">
+						<div class=" row listMembre">
+							<div class="imgZone col-2">
+{# 								<img src="{{ asset('img/sport/' ~ sport.photo) }}" height=44>#}
+							</div>
+							<div class="txtZone col-10">Nom : <b>{{ annee.nom }}</b>, Année :  <b>{{ annee.year}}</b>,  Activé : {%  if annee.active %}<i class="fas fa-check-circle" style="color:green"></i>{% else %}<i class="fas fa-times-circle" style="color:red"></i>{% endif %}</div>
+							
+						</div>
+					</a>
+				</div>
+				<div class="col-1">
+					<a href="{{ path('yearDelete', {id:annee.id}) }}" onclick="return confirm('Voulez vous vraiment supprimer l'année {{ annee.nom }} ? ')"><i class="fas fa-trash asintColor" style="font-size:22px;margin-top:10px;"></i></a>
+				</div>
+			{% endfor %}	
+		</div>
+		</div>
+	</div>
+	<script>
+		var date = new Date().getFullYear();
+		var inputYear = document.getElementById("year_form_year");
+		inputYear.value = date;
+		var active = document.getElementById("year_form_active");
+		active.checked = true;
+	</script>
+{% endblock %}

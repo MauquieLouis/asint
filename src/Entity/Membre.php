@@ -74,6 +74,11 @@ class Membre
      */
     private $clubs;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Year::class, inversedBy="membres")
+     */
+    private $year;
+
     public function __construct()
     {
         $this->sports = new ArrayCollection();
@@ -252,5 +257,17 @@ class Membre
     
     public function __toString(){
         return $this->getId();
+    }
+
+    public function getYear(): ?Year
+    {
+        return $this->year;
+    }
+
+    public function setYear(?Year $year): self
+    {
+        $this->year = $year;
+
+        return $this;
     }
 }

@@ -13,6 +13,7 @@ use App\Entity\Sport;
 use App\Entity\Membre;
 use App\Entity\Club;
 use App\Entity\Cotisation;
+use App\Entity\Year;
 
 // - - - - - - - - F O R M - - - - - - - - - //
 use App\Form\CotisationType;
@@ -27,6 +28,7 @@ class HomeController extends AbstractController
      */
     public function home(){
         //Function
+//         $evenements
         return $this->render('asint/home.html.twig',[]);
     }
     
@@ -74,8 +76,23 @@ class HomeController extends AbstractController
      * @Route("/667equipe", name="equipe")
      */
     public function equipe(){
-        $equipe = $this->getDoctrine()->getRepository(Membre::class)->findAll();
+        $year = $this->getDoctrine()->getRepository(Year::class)->findOneBy(['active' => true]);
+        if(!$year){
+            $equipe = $this->getDoctrine()->getRepository(Membre::class)->findAll();
+        }else{
+            $equipe = $this->getDoctrine()->getRepository(Membre::class)->findBy(['year' => $year]);
+        }
         return $this->render('asint/equipe.html.twig',['equipe' => $equipe]);
+    }
+    
+    /**
+     * @Route("/histoire/{y}", name="histoire")
+     */
+    public function histoire(int $y = 2021){
+        $year = $this->getDoctrine()->getRepository(Year::class)->findOneBy(['year' => $y]);
+        $years = $this->getDoctrine()->getRepository(Year::class)->findAll();
+        $equipe = $this->getDoctrine()->getRepository(Membre::class)->findBy(['year' => $year]);
+        return $this->render('asint/histoire.html.twig',['equipe' => $equipe, 'years' => $years, 'year' => $year]);
     }
     
     /**

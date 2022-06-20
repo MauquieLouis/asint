@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<h1 class="text-center">Les anciennes équipes</h1>
+	<div class="container">
+    	<div class="row">
+    		{% for ye in years %}
+    			<div class="col-md-4 col-12">
+    				<a href="{{ path('histoire', {y:ye.year})}}" class="disableAEffect">
+        				<div class="listeAnnee {% if ye.year == year.year %}selectedAnnee {% endif %}">
+            				<h6>{{ ye.nom}} : {{ ye.year}}</h6>
+        				</div>
+    				</a>
+    			</div>
+    		{% endfor %}
+    	</div>
+    	<div style="border:1px solid #FD78F7;margin:20px;"></div>
+    	<div class="row">
+    		<h1 class="text-center"><b>{{ year.nom }}</b> {{ year.year }}</h1>
+    	</div>
+    	<div class="row" style="text-align:center">
+    		<div class="offset-md-3 col-md-6 col-12">
+    			<a class="col disableAEffect asintColor pLR10" target="_blank" href="{{ year.fb}}">
+                  	<i class="fab fa-facebook" style="font-size:36px;"></i>
+                  </a>
+                  <a class="col disableAEffect asintColor pLR10" target="_blank" href="{{ year.insta }}">
+                  	<i class="fab fa-instagram" style="font-size:36px;"></i>
+                  </a>
+                  <a class="col disableAEffect asintColor pLR10" target="_blank" href="{{ year.site }}">
+                	<i class="fas fa-globe" style="font-size:36px;"></i>
+                  </a>
+    		</div>
+    	</div>
+    	<div style="margin:20px;"></div>
+    	<div class="row">
+    	{% for membre in equipe %}
+    	{% if membre.rang != 0 %}
+        <div class="col-xl-4 col-lg-6 col-12">
+            <h4 class="text-center"><strong>{{ membre.pole }}</strong></h4>
+            <hr>
+        	<!-- <div class="profile-card-6"><img src="http://envato.jayasankarkr.in/code/profile/assets/img/profile-6.jpg" class="img img-responsive"> -->
+        	<div class="profile-card-6"><img src="{{ asset('img/membre/' ~ membre.photo) }}" class="img img-responsive">
+                <div class="profile-name">{{ membre.nom }}
+                    <br>{{ membre.prenom }}
+               	</div>
+            	<div class="profile-position">{% if membre.autre %}{{ membre.autre }} / 20 {% endif %}</div>
+                <div class="profile-overview">
+                    <div class="profile-overview">
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <a class="col disableAEffect pLR10" target="_blank" href="{{ membre.lienfb }}">
+    	                      		<i class="fab fa-facebook" style="font-size:32px;"></i>
+    	                      	</a>
+                            </div>
+                            <div class="col-6">
+                                <a class="col disableAEffect pLR10" target="_blank" href="{{ membre.lienInsta }}">
+    	                      		<i class="fab fa-instagram" style="font-size:32px;"></i>
+    	                      	</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           	</div>
+       	</div>
+       	{% endif %}
+       	{% endfor %}
+       	</div>
+   	</div>
+
+{% endblock %} 

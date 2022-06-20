@@ -100,6 +100,20 @@ h1 {
 	height:550px;
 }
 
+.listeAnnee{
+	border:3px solid #FD78F7;
+	padding:5px;
+	text-align:center;
+	border-radius:2px;
+}
+.listeAnnee:hover{
+	background:#E6E0E6;
+}
+
+.selectedAnnee{
+	background:#FFE6FE;
+}
+
 /*---------------*/
 
 

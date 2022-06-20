@@ -14,21 +14,27 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use App\Entity\Sport;
 use App\Entity\Membre;
 use App\Entity\Club;
+use App\Entity\Evenement;
+use App\Entity\Partenaire;
+use App\Entity\Cotisation;
+use App\Entity\Year;
 
 // - - - - - - - - - - - - F O R M - - - - - - - - - - - //
 use App\Form\AddMembreType;
 use App\Form\AddSportType;
 use App\Form\AddClubType;
+use App\Form\PartenaireType;
+use App\Form\EvenementType;
+use App\Form\YearFormType;
 
 // - - - - - - - - - R E P O S I T O R Y - - - - - - - - //
 use App\Repository\MembreRepository;
 use App\Repository\SportRepository;
 use App\Repository\ClubRepository;
 use App\Repository\CotisationRepository;
-use App\Entity\Cotisation;
 use App\Repository\PartenaireRepository;
-use App\Entity\Partenaire;
-use App\Form\PartenaireType;
+use App\Repository\EvenementRepository;
+use App\Repository\YearRepository;
 
 /**
  * @IsGranted("ROLE_ADMIN")
@@ -43,13 +49,24 @@ class AdminController extends AbstractController
     private $cR;
     private $coR;
     private $pR;
+    private $eR;
+    private $yR;
     
-    public function __construct(MembreRepository $mR, SportRepository $sR, ClubRepository $cR, CotisationRepository $coR, PartenaireRepository $pR){
+    public function __construct(MembreRepository $mR,
+        SportRepository $sR,
+        ClubRepository $cR,
+        CotisationRepository $coR,
+        PartenaireRepository $pR,
+        EvenementRepository $eR,
+        YearRepository $yR
+        ){
         $this->mR=$mR;
         $this->sR=$sR;
         $this->cR=$cR;
         $this->coR=$coR;
         $this->pR=$pR;
+        $this->eR=$eR;   
+        $this->yR=$yR;
     }
     /**
      * @Route("/jeanmichlazone91/index", name="admin91")
@@ -60,7 +77,9 @@ class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
-    
+    //================================================================================//
+    //=========================== M E M B R E S ======================================//
+    //================================================================================//
     /**
      * @Route("/jeanmichlazone91/membre/{idty}", name="membre")
      */
@@ -111,7 +130,9 @@ class AdminController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('membre');
     }
-    
+    //================================================================================//
+    //============================== S P O R T =======================================//
+    //================================================================================//
     /**
      * @Route("/jeanmichlazone91/sport/{idty}", name="sport")
      */
@@ -165,9 +186,9 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('sport');
     }
     
-    ////////////////////////////////////////////////////////////////////////////////////////
-    //------------------------------------C L U B-----------------------------------------//
-    ////////////////////////////////////////////////////////////////////////////////////////
+    //================================================================================//
+    //============================== C L U B S =======================================//
+    //================================================================================//
     /**
      * @Route("/jeanmichlazone91/club/{idty}", name="club")
      */
@@ -282,52 +303,121 @@ class AdminController extends AbstractController
     //===========================E V E N E M E N T ===================================//
     //================================================================================//
     /**
-     * @Route("jeanmichlazone91/partenaires/{idty}", name="partenaire")
+     * @Route("jeanmichlazone91/evenement/{idty}", name="evenement")
      */
     public function evenements(Request $request, SluggerInterface $slugger, string $idty='new'){
-        $partenaires = $this->pR->findAll();
+        $evenements = $this->eR->findAll();
         if($idty == 'new'){
-            $partenaire = new Partenaire();
-            $form = $this->createForm(PartenaireType::class, $partenaire);
+            $evenement = new Evenement();
+            $form = $this->createForm(EvenementType::class, $evenement);
         }else{
-            $partenaire = $this->pR->findOneBy(['id' => intval($idty)]);
-            $form = $this->createForm(PartenaireType::class, $partenaire);
+            $evenement = $this->eR->findOneBy(['id' => intval($idty)]);
+            $form = $this->createForm(EvenementType::class, $evenement);
         }
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $partenaire = $form->getData();
+            $evenement = $form->getData();
             
-            $photo = $form->get('photo')->getData();
+//             $photo = $form->get('photo')->getData();
             
             
-            if($photo){
-                $originalFilename = pathinfo($photo->getClientOriginalName(),PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.pathinfo($photo->getClientOriginalName(),PATHINFO_EXTENSION);
+//             if($photo){
+//                 $originalFilename = pathinfo($photo->getClientOriginalName(),PATHINFO_FILENAME);
+//                 $safeFilename = $slugger->slug($originalFilename);
+//                 $newFilename = $safeFilename.'-'.uniqid().'.'.pathinfo($photo->getClientOriginalName(),PATHINFO_EXTENSION);
                 
-                try{
-                    $photo->move($this->getParameter('photoPartenaire_directory'), $newFilename);
+//                 try{
+//                     $photo->move($this->getParameter('photoPartenaire_directory'), $newFilename);
                     
                     
-                }catch(FileException $e){
-                    dd($e);
-                }
-                $partenaire->setPhoto($newFilename);
-            }
+//                 }catch(FileException $e){
+//                     dd($e);
+//                 }
+//                 $evenement->setPhoto($newFilename);
+//             }
             $em = $this->getDoctrine()->getManager();
-            $em->persist($partenaire);
+            $em->persist($evenement);
             $em->flush();
             
-            return $this->redirectToRoute('partenaire');
+            return $this->redirectToRoute('evenement');
         }
         
-        return $this->render('admin/partenaire.html.twig',['form' => $form->createView(),'partenaires'=> $partenaires]);
+        return $this->render('admin/evenement.html.twig',['form' => $form->createView(),'evenements'=> $evenements]);
     }
+    /**
+     * @Route("/jeanmichlazone91/evenement/{idty}/delete", name="evenementDelete")
+     */
+    public function evenementsDelete(Request $request, string $idty){
+        $em = $this->getDoctrine()->getManager();
+        $evenement = $this->eR->findOneBy(['id' => intval($idty)]);
+        $em->remove($evenement);
+        $em->flush();
+        return $this->redirectToRoute('evenement');
+    }
+
     //================================================================================//
-    //======================= F I N   E V E N E M E N T ==============================//
+    //============================== A N N E E S =====================================//
     //================================================================================//
+    /**
+     * @Route ("/jeanmichlazone91/year/{idty}", name="year")
+     */
+    public function yearsSettings(Request $request, string $idty = 'new'){
+//         if($idty == 'new'){
+        $year = new Year();
+//         }else{
+//             $year = $this->yR->findOneBy(['id' => intval($idty)]);
+//         }
+        $annees = $this->yR->findAll();
+        $form = $this->createForm(YearFormType::class, $year);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $year = $form->getData();
+            $activeYears = $this->yR->findBy(['active' => true]);
+            foreach($activeYears as $y){
+                $y->setActive(false);
+                $em->persist($y);
+            }
+            if($this->yR->findOneBy(['year' => $year->getYear()])){
+                  dd("This year already exist");
+            }
+//             dd($year);
+            $em->persist($year);
+            $em->flush();
+            //Afficher message
+            return $this->redirectToRoute('year');
+        }
+            
+//             return $this->redirectToRoute('membre');
+        return $this->render('admin/year.html.twig',['form' => $form->createView(), 'annees'=>$annees]);
+    }
+    /**
+     * @Route("/jeanmichlazone91/year/delete/{id}/", name="yearDelete")
+     */
+    public function deleteYear(Request $request, string $id){
+        $currentYear = date("Y");
+//         dd($currentYear);
+        $year = $this->yR->findOneBy(['id' => intval($id)]);
+        if($currentYear > $year->getYear()){
+            //Message impossible de suppr car année passé
+            dd("Impossible de supprimer cette année, car elle est passée ...");
+        }
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($year);
+        $em->flush();
+        return $this->redirectToRoute('evenement');
+    }
     
+    /**
+     * @Route("/jeanmichlazone91/year/putActive/{id}/", name="putActive")
+     */
+//     public function putActiveYear(Request $request, string $id){
+//         $year = $this->yR->findOneBy(['id' => intval($id)]);
+//     }
     
+    //================================================================================//
+    //========================= C O T I S A T I O N S ================================//
+    //================================================================================//
     /**
      * @Route ("/jeanmichlazone91/liste/cotisation", name="listeCotis")
      */

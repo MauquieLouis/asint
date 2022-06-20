@@ -1,0 +1,11 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Page not found Error 404 askip</h1>
+	<img src="{{ asset('img/ricardMobile.jpg') }}">
+    <p>
+        The requested page couldn't be located. Checkout for any URL
+        misspelling or <a href="{{ path('home') }}">return to the homepage</a>.
+    </p>
+{% endblock %}
