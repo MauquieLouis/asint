@@ -43,9 +43,16 @@
 		</div>
 		<div class="col-12 col-lg-6" id="liste">
 			<div class="row">
-			<h1>Liste membres</h1>
+				<h1>Liste membres</h1>
+				<div class="row">
+					<div class="col-12">
+						<label for="currentYear">Afficher uniquement l'année courante</label>
+    					<input id="currentYearCheckBox" type="checkbox"/>
+					</div>
+				</div>
+				<div style="margin-top:20px;"></div>
 			{% for membre in membres %}
-				<div class="col-11">
+				<div class="col-11" value="{{membre.year.year}}" name="member">
 					<a href="{{ path('membre', {idty:membre.id }) }}" class="disableAEffect">
 						<div class="row listMembre">
 							<div class="imgZone col-2">
@@ -55,11 +62,42 @@
 						</div>
 					</a>
 				</div>
-				<div class="col-1">
+				<div class="col-1" value="{{membre.year.year}}" name="member">
 					<a href="{{ path('membreDelete', {idty:membre.id}) }}" onclick="return confirm('Voulez vous vraiment supprimer le membre {{ membre.nom }} {{ membre.prenom }} ? ')"><i class="fas fa-trash asintColor" style="font-size:22px;margin-top:10px;"></i></a>
 				</div>
 			{% endfor %}	
 		</div>
 		</div>
 	</div>
+	<input value="{{ currentYear }}"  id="currentYear" hidden/>
+	<script>
+		var selectCurrentYear = document.getElementById('currentYearCheckBox');
+		var members = document.getElementsByName('member');
+		var currentYear = document.getElementById('currentYear').value;
+		//console.log(members[0].getAttribute('value'));
+		
+		selectCurrentYear.addEventListener('change', (event) => {
+			if(event.currentTarget.checked){
+				console.log("current Year selected");
+				//Afficher uniquement les personne avec l'année courante
+				members.forEach(membre => {
+					if(membre.getAttribute('value') != currentYear){
+						//Ne pas Afficher.
+						membre.hidden = true;
+					}
+				})
+			}else{
+				console.log("current Year UnSelected");
+				//Afficher tout le monde
+				members.forEach(membre => {
+					if(membre.getAttribute('value') != currentYear){
+						//Ne pas Afficher.
+						if(membre.hidden){
+							membre.hidden = false;
+						}
+					}
+				})
+			}
+		})
+	</script>
 {% endblock %}

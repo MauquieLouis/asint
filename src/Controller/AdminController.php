@@ -85,6 +85,7 @@ class AdminController extends AbstractController
      */
     public function membreForm(Request $request, SluggerInterface $slugger, string $idty = 'new'){
         $listMembre = $this->mR->findAll();
+        $activeYears = $this->yR->findOneBy(['active' => true]);
         if($idty == 'new'){
             $membre = new Membre();
             $form = $this->createForm(AddMembreType::class, $membre);
@@ -117,7 +118,7 @@ class AdminController extends AbstractController
             
             return $this->redirectToRoute('membre');
         }
-        return $this->render('admin/membre.html.twig',['form' => $form->createView(),'membres'=> $listMembre]);
+        return $this->render('admin/membre.html.twig',['form' => $form->createView(),'membres'=> $listMembre, 'currentYear' => $activeYears->getYear()]);
     }
     
     /**
