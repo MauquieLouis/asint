@@ -32,10 +32,15 @@
 }
 
 h1 {
-  color:#FD78F7 !important;
-  font-family: asintFont;
-  padding: 10px 0;
-  font-size:48px !important;
+	color:#FD78F7 !important;
+	font-family: asintFont;
+	padding: 10px 0;
+	font-size:48px !important;
+}
+h3 {
+	color:#FD78F7;
+ 	font-family: asintFont;
+ 	font-size:29px !important;
 }
 
 

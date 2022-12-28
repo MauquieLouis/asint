@@ -17,19 +17,40 @@ use App\Entity\Year;
 
 // - - - - - - - - F O R M - - - - - - - - - //
 use App\Form\CotisationType;
+use App\Repository\YearRepository;
 use Symfony\Component\String\UnicodeString;
 use App\Entity\Partenaire;
+use Symfony\Component\Finder\Finder;
 
 
 class HomeController extends AbstractController
 {
+    
+    private $yR;
+    
+    public function __construct(
+        YearRepository $yR
+        ){
+            $this->yR=$yR;
+    }
     /**
      * @Route("/", name="home")
      */
     public function home(){
         //Function
-//         $evenements
-        return $this->render('asint/home.html.twig',[]);
+        $currentPicture = null;
+        $finder = new Finder();
+        $currentYear = $this->yR->findOneBy(['active' => true]);
+        $finder->files()->in($this->getParameter('photoAcc_directory'));
+        foreach($finder as $file){
+//             dump(explode('.',$file->getRelativePathname())[0]);
+            if($currentYear->getNom() == explode('.',$file->getRelativePathname())[0]){
+//                 dump("Current picture : ", $file->getRelativePathname());
+                $currentPicture = $file->getRelativePathname();
+            }
+        }
+//         dd($finder);
+        return $this->render('asint/home.html.twig', ['currentPicture' => $currentPicture]);
     }
     
     /**
@@ -92,7 +113,19 @@ class HomeController extends AbstractController
         $year = $this->getDoctrine()->getRepository(Year::class)->findOneBy(['year' => $y]);
         $years = $this->getDoctrine()->getRepository(Year::class)->findAll();
         $equipe = $this->getDoctrine()->getRepository(Membre::class)->findBy(['year' => $year]);
-        return $this->render('asint/histoire.html.twig',['equipe' => $equipe, 'years' => $years, 'year' => $year]);
+        
+        $currentPicture = null;
+        $finder = new Finder();
+        $currentYear = $this->yR->findOneBy(['active' => true]);
+        $finder->files()->in($this->getParameter('photoAcc_directory'));
+        foreach($finder as $file){
+            //             dump(explode('.',$file->getRelativePathname())[0]);
+            if($currentYear->getNom() == explode('.',$file->getRelativePathname())[0]){
+                //                 dump("Current picture : ", $file->getRelativePathname());
+                $currentPicture = $file->getRelativePathname();
+            }
+        }
+        return $this->render('asint/histoire.html.twig',['equipe' => $equipe, 'years' => $years, 'year' => $year, 'currentPicture' => $currentPicture]);
     }
     
     /**

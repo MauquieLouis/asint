@@ -26,6 +26,7 @@ use App\Form\AddClubType;
 use App\Form\PartenaireType;
 use App\Form\EvenementType;
 use App\Form\YearFormType;
+use App\Form\ChangeHomeImageType;
 
 // - - - - - - - - - R E P O S I T O R Y - - - - - - - - //
 use App\Repository\MembreRepository;
@@ -417,6 +418,39 @@ class AdminController extends AbstractController
 //     }
     
     //================================================================================//
+    //======================= P H O T O   A C C U E I L ==============================//
+    //================================================================================//
+    
+    /**
+     * @Route("jeanmichlazone91/changeHomeImage", name="changeHomeImage")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function changeHomeImage(Request $request){
+        $form = $this->createForm(ChangeHomeImageType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $photo = $form->get('photo')->getData();
+            
+            if($photo){
+//              $safeFilename = $slugger->slug($originalFilename);
+                $currentYear = $this->yR->findOneBy(['active' => true]);
+                $newFilename = $currentYear->getNom().".".pathinfo($photo->getClientOriginalName(),PATHINFO_EXTENSION);                
+                try{
+                    $photo->move($this->getParameter('photoAcc_directory'), $newFilename);               
+                }catch(FileException $e){
+                    dd($e);
+                }
+            }
+            $this->addFlash('success', 'C\'est bon le sang, c\'est changé.');
+            return $this->redirectToRoute('admin91');
+            
+        }
+        
+        //Afficher message
+        return $this->render('admin/changeHomeImage.html.twig',['form' => $form->createView()]);
+        }
+    
+    //================================================================================//
     //========================= C O T I S A T I O N S ================================//
     //================================================================================//
     /**
@@ -439,5 +473,7 @@ class AdminController extends AbstractController
         // AJOUTER ENREGISTREMENT BDD GALETTE.
         return $this->redirectToRoute('listeCotis');
     }
+    
+    
     
 }
