@@ -116,7 +116,7 @@ class HomeController extends AbstractController
         
         $currentPicture = null;
         $finder = new Finder();
-        $currentYear = $this->yR->findOneBy(['active' => true]);
+        $currentYear = $this->yR->findOneBy(['year' => $y]);
         $finder->files()->in($this->getParameter('photoAcc_directory'));
         foreach($finder as $file){
             //             dump(explode('.',$file->getRelativePathname())[0]);
